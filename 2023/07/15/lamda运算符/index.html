@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Archives | 风铃の小窝</title>
+        <title>lamda运算符 | 风铃の小窝</title>
         <meta name="author" content="风铃" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
@@ -27,6 +27,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -141,52 +145,147 @@
 
             <transition name="into">
                 <div id="main" v-show="!loading">
-                    
-<div id="archives">
-    
-    <div id="timeline-wrap" ref="timeline">
+                    <div class="article">
+    <div>
+        <h1>lamda运算符</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/7/15
+        </span>
         
-        <div class="timeline" data-title="博客搭建完成">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2023/6/13</div>
-                <a href="/2023/06/13/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/">
-                    <h3>博客搭建完成</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                </div>
-            </div>
-        </div>
         
-        <div class="timeline" data-title="lamda运算符">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2023/7/15</div>
-                <a href="/2023/07/15/lamda%E8%BF%90%E7%AE%97%E7%AC%A6/">
-                    <h3>lamda运算符</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                    <span class="tags">
-                        <span class="icon">
-                            <i class="fa-solid fa-tags fa-fw"></i>
-                        </span>
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/Java8%E6%96%B0%E7%89%B9%E6%80%A7/" style="color: #00bcd4">Java8新特性</a>
-                        </span>
-                        
-                    </span>
-                    
-                </div>
-            </div>
-        </div>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Java8%E6%96%B0%E7%89%B9%E6%80%A7/" style="color: #00bcd4">Java8新特性</a>
+            </span>
+            
+        </span>
         
     </div>
+    
+    <div class="content" v-pre>
+        <h1 id="lamda表达式"><a href="#lamda表达式" class="headerlink" title="lamda表达式"></a>lamda表达式</h1><h1 id="双冒号"><a href="#双冒号" class="headerlink" title="双冒号 ::"></a>双冒号 ::</h1><p>JDK8中有双冒号的用法，就是把方法当做参数传到<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=stream&spm=1001.2101.3001.7020">stream</a>内部，使stream的每个元素都传入到该方法里面执行一下。</p>
+<p>使用方法：</p>
+<pre><code class="java">类名::方法名
+</code></pre>
+<p>例如：</p>
+<pre><code class="java">表达式:
+
+person -&gt; person.getAge();
+
+可以替换成
+
+Person::getAge
+
+表达式
+
+() -&gt; new HashMap&lt;&gt;();
+
+可以替换成
+
+HashMap::new
+</code></pre>
+<p>这种[方法引用]或者说[双冒号运算]对应的参数类型是Function&lt;T,R&gt; T表示传入类型，R表示返回类型。比如表达式person -&gt; person.getAge(); 传入参数是person，返回值是person.getAge()，那么方法引用Person::getAge就对应着Function&lt;Person,Integer&gt;类型。 </p>
+<p>以前的代码一般是如此的：</p>
+<pre><code class="java">public class AcceptMethod &#123;
+
+    public static void  printValur(String str)&#123;
+        System.out.println(&quot;print value : &quot;+str);
+    &#125;
+
+    public static void main(String[] args) &#123;
+        List&lt;String&gt; al = Arrays.asList(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;);
+        for (String a: al) &#123;
+            AcceptMethod.printValur(a);
+        &#125;
+      //下面的for each循环和上面的循环是等价的 
+        al.forEach(x-&gt;&#123;
+            AcceptMethod.printValur(x);
+        &#125;);
+    &#125;
+&#125;
+</code></pre>
+<p>现在JDK双冒号是:</p>
+<pre><code class="java">public class MyTest &#123;
+    public static void  printValur(String str)&#123;
+        System.out.println(&quot;print value : &quot;+str);
+    &#125;
+
+    public static void main(String[] args) &#123;
+        List&lt;String&gt; al = Arrays.asList(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;);
+        al.forEach(AcceptMethod::printValur);
+        //下面的方法和上面等价的
+        Consumer&lt;String&gt; methodParam = AcceptMethod::printValur; //方法参数
+        al.forEach(x -&gt; methodParam.accept(x));//方法执行accept
+    &#125;
+&#125;
+</code></pre>
+<p>Java 8 中我们可以通过  <strong>::</strong> 关键字来访问类的<strong>构造方法，对象方法，静态方法</strong>。</p>
+<pre><code class="java">class Something &#123;
+
+    // constructor methods
+    Something() &#123;&#125;
+
+    Something(String something) &#123;
+    System.out.println(something);
+    &#125;
+
+    // static methods
+    static String startsWith(String s) &#123;
+        return String.valueOf(s.charAt(0));
+    &#125;
+
+    // object methods
+    String endWith(String s) &#123;
+        return String.valueOf(s.charAt(s.length()-1));
+    &#125;
+
+    void endWith() &#123;&#125;
+&#125;
+</code></pre>
+<p>如何用 ‘::’ 来访问类Something中的方法呢？先定义一个接口，因为必须要用 functional interface 来接收，否则编译错误（The target type of this expression must be a functional interface）</p>
+<pre><code class="java">@FunctionalInterface
+interface IConvert&lt;F, T&gt; &#123;
+    T convert(F form);
+&#125;
+</code></pre>
+<p>（@FunctionalInterface 注解要求接口有且只有一个抽象方法，JDK中有许多类用到该注解，比如 Runnable，它只有一个 Run 方法。）</p>
+<p>观察接口 IConvert，传参为类型 F，返回类型 T。所以，我们可以这样访问类Something的方法：</p>
+<p>访问静态方法</p>
+<pre><code class="java">// static methods
+IConvert&lt;String, String&gt; convert = Something::startsWith;
+String converted = convert.convert(&quot;123&quot;);
+</code></pre>
+<p>访问对象方法</p>
+<pre><code class="java">// object methods
+Something something = new Something();
+IConvert&lt;String, String&gt; converter = something::endWith;
+String converted = converter.convert(&quot;Java&quot;);
+</code></pre>
+<p>访问构造方法</p>
+<pre><code class="java">// constructor methods
+IConvert&lt;String, Something&gt; convert = Something::new;
+Something something = convert.convert(&quot;constructors&quot;);
+</code></pre>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>我们可以把类Something中的方法static String startsWith(String s){…}、String endWith(String s){…}、Something(String something){…}看作是接口IConvert的实现，因为它们都符合接口定义的那个“模版”，有传参类型F以及返回值类型T。比如构造方法Something(String something)，它传参为String类型，返回值类型为Something。注解@FunctionalInterface保证了接口有且仅有一个抽象方法，所以JDK能准确地匹配到相应方法。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
 </div>
 
                     <footer id="footer">
@@ -218,6 +317,12 @@
             
         </div>
         <script src="/js/main.js"></script>
+        
+        
+
+
+
+
         
     </body>
 </html>
