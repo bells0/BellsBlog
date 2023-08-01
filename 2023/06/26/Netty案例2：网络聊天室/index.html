@@ -1,0 +1,403 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Netty案例2：网络聊天室 | 风铃の小窝</title>
+        <meta name="author" content="风铃" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <link rel="icon" href="/images/favicon.png" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="layout">
+            <transition name="fade">
+                <div id="loading" v-show="loading">
+                    <div id="loading-circle">
+                        <h2>LOADING</h2>
+                        <p>加载过慢请开启缓存 浏览器默认开启</p>
+                        <img src="/images/loading.gif" />
+                    </div>
+                </div>
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div id="desktop-menu">
+        <a class="title" href="/">
+            <span>风铃の小窝</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;风铃の小窝</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </div>
+</nav>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+            <transition name="into">
+                <div id="main" v-show="!loading">
+                    <div class="article">
+    <div>
+        <h1>Netty案例2：网络聊天室</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/6/26
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="color: #03a9f4">网络编程</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>结构：<br><img src="/2023/06/26/Netty%E6%A1%88%E4%BE%8B2%EF%BC%9A%E7%BD%91%E7%BB%9C%E8%81%8A%E5%A4%A9%E5%AE%A4/image.png" alt="loading-ag-800"><br>本案例实现一个Netty版本多人聊天室案例。<br><strong>实现步骤：</strong></p>
+<ol>
+<li>编写聊天程序服务端：配置线程组，配置编解码器，配置自定义业务处理类，绑定端口号，然后启<br>动Server，等待Client连接</li>
+<li>编写服务端-业务处理类Handler：<ol>
+<li>当通道就绪时，输出上线</li>
+<li>当通道未就绪时，输出离线</li>
+<li>当通道发来数据时，读取数据，进行广播</li>
+</ol>
+</li>
+<li>编写聊天程序客户端：配置了线程组，配置编解码器，配置了自定义的业务处理类，然后启动<br>Client，连接Server。<br>连接服务端成功后，获取客户端与服务端建立的Channel<br>获取系统键盘输入，将用户输入信息通过Channel发送给服务端</li>
+<li>编写客户端-业务处理类：<br>读取事件：监听服务端广播消息</li>
+</ol>
+<h3 id="1-聊天服务端程序ChatServer"><a href="#1-聊天服务端程序ChatServer" class="headerlink" title="1.聊天服务端程序ChatServer"></a>1.<strong>聊天服务端程序ChatServer</strong></h3><pre><code class="java">//聊天程序服务器端
+public class NettyChatServer &#123;
+
+    private int port; //服务器端端口号
+
+    public NettyChatServer(int port) &#123;
+        this.port = port;
+    &#125;
+
+    public void run() throws Exception &#123;
+        //定义线程组bossGroup
+        EventLoopGroup bossGroup = new NioEventLoopGroup();
+        //定义线程组workerGroup
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        try &#123;
+            ServerBootstrap b = new ServerBootstrap();
+            b.group(bossGroup, workerGroup)
+                    .channel(NioServerSocketChannel.class)
+                    .option(ChannelOption.SO_BACKLOG, 128)
+                    .childOption(ChannelOption.SO_KEEPALIVE, true)
+                    .childHandler(new ChannelInitializer&lt;SocketChannel&gt;() &#123;
+                        @Override
+                        public void initChannel(SocketChannel ch) &#123;
+                            ChannelPipeline pipeline = ch.pipeline();
+                            //往pipeline链中添加一个解码器
+                            pipeline.addLast(&quot;decoder&quot;, new StringDecoder());
+                            //往pipeline链中添加一个编码器
+                            pipeline.addLast(&quot;encoder&quot;, new StringEncoder());
+                            //往pipeline链中添加自定义的handler(业务处理类)
+                            pipeline.addLast(new NettyChatServerHandler());
+                        &#125;
+                    &#125;);
+            System.out.println(&quot;网络真人聊天室 Server 启动......&quot;);
+            ChannelFuture f = b.bind(port).sync();
+            f.channel().closeFuture().sync();
+        &#125; finally &#123;
+            workerGroup.shutdownGracefully();
+            bossGroup.shutdownGracefully();
+            System.out.println(&quot;网络真人聊天室 Server 关闭......&quot;);
+        &#125;
+    &#125;
+
+    public static void main(String[] args) throws Exception &#123;
+        new NettyChatServer(9999).run();
+    &#125;
+&#125;
+</code></pre>
+<p>上述代码通过 Netty 编写了一个服务端程序</p>
+<blockquote>
+<p>注意：我往 Pipeline 链中添加了处理字符串的编码器和解码器，它们加入到 Pipeline 链中后会自动工作，使得服务端读写字符串数据时更加方便，不用人工处理 编解码操作。</p>
+</blockquote>
+<h3 id="2-服务端业务处理类ChatServerHandler"><a href="#2-服务端业务处理类ChatServerHandler" class="headerlink" title="2.服务端业务处理类ChatServerHandler"></a>2.<strong>服务端业务处理类ChatServerHandler</strong></h3><pre><code class="java">//自定义一个服务器端业务处理类
+public class NettyChatServerHandler extends SimpleChannelInboundHandler&lt;String&gt; &#123;
+
+    public static List&lt;Channel&gt; channels = new CopyOnWriteArrayList&lt;&gt;();
+
+    @Override  //通道就绪
+    public void channelActive(ChannelHandlerContext ctx)  &#123;
+        Channel inChannel=ctx.channel();
+        channels.add(inChannel);
+        System.out.println(&quot;[Server]:&quot;+inChannel.remoteAddress().toString().substring(1)+&quot;上线&quot;);
+    &#125;
+    @Override  //通道未就绪
+    public void channelInactive(ChannelHandlerContext ctx)  &#123;
+        Channel inChannel=ctx.channel();
+        channels.remove(inChannel);
+        System.out.println(&quot;[Server]:&quot;+inChannel.remoteAddress().toString().substring(1)+&quot;离线&quot;);
+    &#125;
+    @Override  //读取数据
+    protected void channelRead0(ChannelHandlerContext ctx, String s)  &#123;
+        Channel inChannel=ctx.channel();
+        SocketAddress remoteAddress = inChannel.remoteAddress();
+        System.out.println(remoteAddress.toString().substring(11)+&quot;:&quot; + s);//为什么可以拿到字符串呢？字节数组呢！已经进行过解码
+        //遍历所有上线Channel，广播消息
+        for(Channel channel:channels)&#123;
+            if(channel!=inChannel)&#123;
+                //写出的操作，编码，字符串--&gt;字节数组
+                channel.writeAndFlush(&quot;[&quot;+inChannel.remoteAddress().toString().substring(1)+&quot;]&quot;+&quot;说：&quot;+s+&quot;\n&quot;);
+            &#125;
+        &#125;
+    &#125;
+
+&#125;
+</code></pre>
+<p>上述代码通过继承 SimpleChannelInboundHandler 类自定义了一个服务端业务处理类，并在该类中重<br>写了四个方法。 </p>
+<ul>
+<li><p>当通道就绪时，输出上线 </p>
+</li>
+<li><p>当通道未就绪时，输出离线 </p>
+</li>
+<li><p>当通道发来数据时，读取数据，进行广播</p>
+<h3 id="3-聊天程序客户端ChatClient"><a href="#3-聊天程序客户端ChatClient" class="headerlink" title="3.聊天程序客户端ChatClient"></a>3.<strong>聊天程序客户端ChatClient</strong></h3><pre><code class="java">//聊天程序客户端
+public class NettyChatClient &#123;
+  private final String host; //服务器端IP地址
+  private final int port;  //服务器端端口号
+
+  public NettyChatClient(String host, int port) &#123;
+      this.host = host;
+      this.port = port;
+  &#125;
+
+  public void run()&#123;
+      EventLoopGroup group = new NioEventLoopGroup();
+      try &#123;
+          Bootstrap bootstrap = new Bootstrap()
+                  .group(group)
+                  .channel(NioSocketChannel.class)
+                  .handler(new ChannelInitializer&lt;SocketChannel&gt;() &#123;
+                      @Override
+                      public void initChannel(SocketChannel ch)&#123;
+                          ChannelPipeline pipeline=ch.pipeline();
+                          //往pipeline链中添加一个解码器
+                          pipeline.addLast(&quot;decoder&quot;,new StringDecoder());
+                          //往pipeline链中添加一个编码器
+                          pipeline.addLast(&quot;encoder&quot;,new StringEncoder());
+                          //往pipeline链中添加自定义的handler(业务处理类)
+                          pipeline.addLast(new NettyChatClientHandler());
+                      &#125;
+                  &#125;);
+
+          ChannelFuture cf = bootstrap.connect(host, port).sync();
+
+          Channel channel = cf.channel();
+          //&quot;127.0.0.1:111&quot;
+          System.out.println(&quot;------&quot;+channel.localAddress().toString().substring(1)+&quot;------&quot;);
+
+          Scanner scanner=new Scanner(System.in);
+          while (scanner.hasNextLine())&#123;
+              String msg=scanner.nextLine();
+              channel.writeAndFlush(msg+&quot;\r\n&quot;);
+          &#125;
+          //---end
+          cf.channel().closeFuture().sync();
+      &#125; catch (Exception e) &#123;
+          e.printStackTrace();
+      &#125; finally &#123;
+          group.shutdownGracefully();
+      &#125;
+  &#125;
+
+  public static void main(String[] args) throws Exception &#123;
+      new NettyChatClient(&quot;127.0.0.1&quot;,9999).run();
+  &#125;
+&#125;
+</code></pre>
+<p>上述代码通过 Netty 编写了一个客户端程序。客户端同样需要配置编解码器</p>
+</li>
+</ul>
+<h3 id="4-客户端业务处理类ChatClientHandler"><a href="#4-客户端业务处理类ChatClientHandler" class="headerlink" title="4. 客户端业务处理类ChatClientHandler"></a><strong>4. 客户端业务处理类ChatClientHandler</strong></h3><pre><code class="java">//自定义一个客户端业务处理类
+public class NettyChatClientHandler extends SimpleChannelInboundHandler&lt;String&gt; &#123;
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, String s) throws Exception &#123;
+        System.out.println(s.trim());
+    &#125;
+&#125;
+</code></pre>
+<p>上述代码通过继承 SimpleChannelInboundHandler 自定义了一个客户端业务处理类，重写了一个方法用来读取服务端发过来的数据。</p>
+<h3 id="5-启动测试"><a href="#5-启动测试" class="headerlink" title="5.启动测试"></a>5.启动测试</h3><p>1个服务器，3个客户端</p>
+<ol>
+<li>启动服务器<img src="/2023/06/26/Netty%E6%A1%88%E4%BE%8B2%EF%BC%9A%E7%BD%91%E7%BB%9C%E8%81%8A%E5%A4%A9%E5%AE%A4/image1.png" alt="loading-ag-801"></li>
+<li>启动3个客户端<img src="/2023/06/26/Netty%E6%A1%88%E4%BE%8B2%EF%BC%9A%E7%BD%91%E7%BB%9C%E8%81%8A%E5%A4%A9%E5%AE%A4/image2.png" alt="loading-ag-803"></li>
+<li>客户端发送消息<img src="/2023/06/26/Netty%E6%A1%88%E4%BE%8B2%EF%BC%9A%E7%BD%91%E7%BB%9C%E8%81%8A%E5%A4%A9%E5%AE%A4/image3.png" alt="image.png"><img src="/2023/06/26/Netty%E6%A1%88%E4%BE%8B2%EF%BC%9A%E7%BD%91%E7%BB%9C%E8%81%8A%E5%A4%A9%E5%AE%A4/image4.png" alt="loading-ag-205"><img src="/2023/06/26/Netty%E6%A1%88%E4%BE%8B2%EF%BC%9A%E7%BD%91%E7%BB%9C%E8%81%8A%E5%A4%A9%E5%AE%A4/image5.png" alt="loading-ag-206"></li>
+<li>下线提醒 <ol>
+<li>停止服务，服务器打印：<img src="/2023/06/26/Netty%E6%A1%88%E4%BE%8B2%EF%BC%9A%E7%BD%91%E7%BB%9C%E8%81%8A%E5%A4%A9%E5%AE%A4/image7.png" alt="loading-ag-202"></li>
+</ol>
+</li>
+</ol>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 风铃の小窝
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;风铃
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+                </div>
+            </transition>
+            
+            <transition name="fade">
+                <div id="preview" ref="preview" v-show="previewShow">
+                    <img id="preview-content" ref="previewContent" />
+                </div>
+            </transition>
+            
+        </div>
+        <script src="/js/main.js"></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>

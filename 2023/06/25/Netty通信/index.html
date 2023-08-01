@@ -165,7 +165,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="color: #ffa2c4">网络编程</a>
+                <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="color: #00a596">网络编程</a>
             </span>
             
         </span>
@@ -173,11 +173,12 @@
     </div>
     
     <div class="content" v-pre>
-        <p>目标：Netty 开发一个网络应用程序，实现服务端和客户端之间的数据通信。<br>架构图：<br><img src="https://cdn.nlark.com/yuque/0/2023/png/453637/1690872786465-4e2b956d-4f32-46ec-a7cc-f19e1df62fdd.png" alt="image.png"></p>
+        <p>目标：Netty 开发一个网络应用程序，实现服务端和客户端之间的数据通信。<br>架构图：</p>
+<p><img src="/2023/06/25/Netty%E9%80%9A%E4%BF%A1/image.png"></p>
 <ol>
 <li>导入依赖坐标</li>
-<li>编写Netty服务端程序：配置线程组，配置自定义业务处理类，绑定端口号，然后启动Server，等<br>待Client连接</li>
-<li>编写服务端-业务处理类Handler：继承 ChannelInboundHandlerAdapter，并分别重写了三个方<br>法<ol>
+<li>编写Netty服务端程序：配置线程组，配置自定义业务处理类，绑定端口号，然后启动Server，等待Client连接</li>
+<li>编写服务端-业务处理类Handler：继承 ChannelInboundHandlerAdapter，并分别重写了三个方法<ol>
 <li>读取事件</li>
 <li>读取完成事件</li>
 <li>异常捕获事件</li>
@@ -311,9 +312,9 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter &#123;
 </code></pre>
 <p>上述代码自定义了一个Client业务处理类，继承 ChannelInboundHandlerAdapter ，并分别重写了2个<br>方法</p>
 <h3 id="6-启动测试"><a href="#6-启动测试" class="headerlink" title="6.启动测试"></a>6.启动测试</h3><ol>
-<li>启动服务端：NettyServer，服务器等待客户端消息，控制台打印：<img src="https://cdn.nlark.com/yuque/0/2023/png/453637/1690873781971-3a7cfef5-d6c8-452e-aeb5-c62c88469e3b.png" alt="image.png"></li>
-<li>启动客户端：NettyClient，客户端连接服务端，收到来自服务端的信息，客户端控制台打印：<img src="https://cdn.nlark.com/yuque/0/2023/png/453637/1690874074963-f4a2d2b2-897a-4dd6-9679-5f1629bdc0c0.png" alt="image.png"></li>
-<li>此时服务端与客户端控制台：<img src="https://cdn.nlark.com/yuque/0/2023/png/453637/1690874128452-06212089-f417-4986-a8a1-b3787aa80e36.png" alt="image.png"></li>
+<li>启动服务端：NettyServer，服务器等待客户端消息，控制台打印：<img src="/2023/06/25/Netty%E9%80%9A%E4%BF%A1/image2.png" alt="loading-ag-203"></li>
+<li>启动客户端：NettyClient，客户端连接服务端，收到来自服务端的信息，客户端控制台打印：<img src="/2023/06/25/Netty%E9%80%9A%E4%BF%A1/image3.png" alt="loading-ag-205"></li>
+<li>此时服务端与客户端控制台：<img src="/2023/06/25/Netty%E9%80%9A%E4%BF%A1/image4.png" alt="loading-ag-207"></li>
 </ol>
 <p><strong>总结：</strong>这样就完成客户端与服务端之间的通信。下一步我们再做一个在线聊天室的案例。</p>
 
