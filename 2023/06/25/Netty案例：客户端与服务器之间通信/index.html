@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Netty案例：客户端与服务器之间通信 | 风铃の小窝</title>
+        <meta name="author" content="风铃" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <link rel="icon" href="/images/favicon.png" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="layout">
+            <transition name="fade">
+                <div id="loading" v-show="loading">
+                    <div id="loading-circle">
+                        <h2>LOADING</h2>
+                        <p>加载过慢请开启缓存 浏览器默认开启</p>
+                        <img src="/images/loading.gif" />
+                    </div>
+                </div>
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div id="desktop-menu">
+        <a class="title" href="/">
+            <span>风铃の小窝</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;风铃の小窝</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </div>
+</nav>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+            <transition name="into">
+                <div id="main" v-show="!loading">
+                    <div class="article">
+    <div>
+        <h1>Netty案例：客户端与服务器之间通信</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/6/25
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="color: #ff7d73">网络编程</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>目标：Netty 开发一个网络应用程序，实现服务端和客户端之间的数据通信。<br>架构图：<br><img src="https://cdn.nlark.com/yuque/0/2023/png/453637/1690872786465-4e2b956d-4f32-46ec-a7cc-f19e1df62fdd.png" alt="image.png"></p>
+<ol>
+<li>导入依赖坐标</li>
+<li>编写Netty服务端程序：配置线程组，配置自定义业务处理类，绑定端口号，然后启动Server，等<br>待Client连接</li>
+<li>编写服务端-业务处理类Handler：继承 ChannelInboundHandlerAdapter，并分别重写了三个方<br>法<ol>
+<li>读取事件</li>
+<li>读取完成事件</li>
+<li>异常捕获事件</li>
+</ol>
+</li>
+<li>编写客户端程序：配置了线程组，配置了自定义的业务处理类，然后启动Client，连接Server。</li>
+<li>编写客户端-业务处理类：继承 ChannelInboundHandlerAdapter ，并分别重写了2个方法<ol>
+<li>通道就绪事件</li>
+<li>读取事件</li>
+</ol>
+</li>
+</ol>
+<h3 id="1-导入依赖"><a href="#1-导入依赖" class="headerlink" title="1.导入依赖"></a>1.导入依赖</h3><pre><code class="xml">&lt;dependencies&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;io.netty&lt;/groupId&gt;
+    &lt;artifactId&gt;netty-all&lt;/artifactId&gt;
+    &lt;version&gt;4.1.8.Final&lt;/version&gt;
+  &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<p>上述代码在 pom 文件中引入了 netty 的坐标</p>
+<h3 id="2-服务端程序Server"><a href="#2-服务端程序Server" class="headerlink" title="2.服务端程序Server"></a>2.服务端程序Server</h3><pre><code class="java">public class NettyServer &#123;
+    public static void main(String[] args) throws Exception&#123;
+        //1. 创建一个线程组：接收客户端连接
+        EventLoopGroup bossGroup =new NioEventLoopGroup();
+        //2. 创建一个线程组：处理网络操作
+        EventLoopGroup workerGroup =new NioEventLoopGroup();
+        //3. 创建服务器端启动助手来配置参数
+        ServerBootstrap serverBootstrap=new ServerBootstrap();
+
+        serverBootstrap.group(bossGroup, workerGroup) //4.设置两个线程组
+                .channel(NioServerSocketChannel.class) //5.使用NioServerSocketChannel作为服务器端通道的实现
+                .option(ChannelOption.SO_BACKLOG, 128) //6.设置线程队列中等待连接的个数
+                .childOption(ChannelOption.SO_KEEPALIVE, true) //7.保持长连接
+                .childHandler(new ChannelInitializer&lt;SocketChannel&gt;() &#123;  //8. 创建一个通道初始化对象
+                    public void initChannel(SocketChannel sc) &#123;   //9. 往Pipeline链中添加自定义的handler类
+                        sc.pipeline().addLast(new NettyServerHandler());
+                    &#125;
+                &#125;);
+        System.out.println(&quot;......服务端 启动中 init port:9999 ......&quot;);
+        ChannelFuture cf=serverBootstrap.bind(9999).sync();  //10. 绑定端口 bind方法是异步的  sync方法是同步阻塞的
+        System.out.println(&quot;......服务端 启动成功 ......&quot;);
+
+        //11. 关闭通道，关闭线程组
+        cf.channel().closeFuture().sync(); //异步
+        bossGroup.shutdownGracefully();
+        workerGroup.shutdownGracefully();
+    &#125;
+&#125;
+</code></pre>
+<p>上述代码编写了一个服务端程序，配置了线程组，配置了自定义业务处理类，绑定端口号，然后启动<br>Server，等待Client连接。</p>
+<h3 id="3-服务端-业务处理类ServerHandler"><a href="#3-服务端-业务处理类ServerHandler" class="headerlink" title="3.服务端-业务处理类ServerHandler"></a>3.服务端-业务处理类ServerHandler</h3><pre><code class="java">//服务器端的业务处理类
+public class NettyServerHandler extends ChannelInboundHandlerAdapter &#123;
+
+    //读取数据事件，msg就是客戶端发过来的数据。
+    public void channelRead(ChannelHandlerContext ctx,Object msg)&#123;
+        //System.out.println(&quot;Server:&quot;+ctx);
+        //用缓冲区接受数据
+        ByteBuf buf=(ByteBuf) msg;
+        //转成字符串
+
+        //必须编码和解码
+        // 字符--&gt;字节
+        // 字节--&gt;字符
+        System.out.println(&quot;client msg：&quot;+buf.toString(CharsetUtil.UTF_8));
+    &#125;
+
+    //数据读取完毕事件，读取完客户端数据后回复客户端
+    public void channelReadComplete(ChannelHandlerContext ctx)&#123;
+        //Unpooled.copiedBuffer获取到缓冲区
+        //第一个参数是向客户端传的字符串
+        ByteBuf byteBuf = Unpooled.copiedBuffer(&quot;收到收到！我是服务端！&quot;, CharsetUtil.UTF_8);
+        ctx.writeAndFlush(byteBuf);
+    &#125;
+
+    //异常发生事件
+    public void exceptionCaught(ChannelHandlerContext ctx,Throwable t)&#123;
+        //异常时关闭ctx，ctx是相关信息的汇总，关闭它其它的也就关闭了。
+        ctx.close();
+    &#125;
+
+&#125;
+</code></pre>
+<p>上述代码定义了一个服务端业务处理类，继承 ChannelInboundHandlerAdapter，并分别重写了三个方<br>法。 </p>
+<h3 id="4-客户端程序Client"><a href="#4-客户端程序Client" class="headerlink" title="4.客户端程序Client"></a>4.客户端程序Client</h3><pre><code class="java">public class NettyClient &#123;
+    public static void main(String[] args) throws  Exception&#123;
+
+        //1. 创建一个线程组
+        EventLoopGroup group=new NioEventLoopGroup();
+        //2. 创建客户端的启动助手，完成相关配置
+        Bootstrap b=new Bootstrap();
+        b.group(group)  //3. 设置线程组
+         .channel(NioSocketChannel.class)  //4. 设置客户端通道的实现类
+         .handler(new ChannelInitializer&lt;SocketChannel&gt;() &#123;  //5. 创建一个通道初始化对象
+             @Override
+             protected void initChannel(SocketChannel socketChannel) throws Exception &#123;
+                 socketChannel.pipeline().addLast(new NettyClientHandler()); //6.往Pipeline链中添加自定义的handler
+             &#125;
+         &#125;);
+        System.out.println(&quot;......客户端 准备就绪 msg发射......&quot;);
+
+        //7.启动客户端去连接服务器端  connect方法是异步的   sync方法是同步阻塞的
+        ChannelFuture cf=b.connect(&quot;127.0.0.1&quot;,9999).sync();
+
+        //8.关闭连接(异步非阻塞)
+        cf.channel().closeFuture().sync();
+
+    &#125;
+&#125;
+</code></pre>
+<p>上述代码编写了一个Client程序，配置了线程组，配置了自定义的业务处理类，然后启动Client，连接<br>Server。</p>
+<h3 id="5-客户端-业务处理类ClientHandler"><a href="#5-客户端-业务处理类ClientHandler" class="headerlink" title="5.客户端-业务处理类ClientHandler"></a>5.客户端-业务处理类ClientHandler</h3><pre><code class="java">//客户端业务处理类
+public class NettyClientHandler extends ChannelInboundHandlerAdapter &#123;
+
+    //通道就绪事件
+    public void channelActive(ChannelHandlerContext ctx)&#123;
+        //System.out.println(&quot;Client:&quot;+ctx);
+        //编码和解码
+        ByteBuf byteBuf = Unpooled.copiedBuffer(&quot;你好！你好！我是客户端！服务器听到请回复！&quot;, CharsetUtil.UTF_8);
+        ctx.writeAndFlush(byteBuf);
+    &#125;
+
+    //读取数据事件
+    public void channelRead(ChannelHandlerContext ctx,Object msg)&#123;
+        ByteBuf buf=(ByteBuf) msg;
+        //字节 --&gt; 字符串
+        System.out.println(&quot;server msg：&quot;+buf.toString(CharsetUtil.UTF_8));
+    &#125;
+
+&#125;
+</code></pre>
+<p>上述代码自定义了一个Client业务处理类，继承 ChannelInboundHandlerAdapter ，并分别重写了2个<br>方法</p>
+<h3 id="6-启动测试"><a href="#6-启动测试" class="headerlink" title="6.启动测试"></a>6.启动测试</h3><ol>
+<li>启动服务端：NettyServer，服务器等待客户端消息，控制台打印：<img src="https://cdn.nlark.com/yuque/0/2023/png/453637/1690873781971-3a7cfef5-d6c8-452e-aeb5-c62c88469e3b.png" alt="image.png"></li>
+<li>启动客户端：NettyClient，客户端连接服务端，收到来自服务端的信息，客户端控制台打印：<img src="https://cdn.nlark.com/yuque/0/2023/png/453637/1690874074963-f4a2d2b2-897a-4dd6-9679-5f1629bdc0c0.png" alt="image.png"></li>
+<li>此时服务端与客户端控制台：<img src="https://cdn.nlark.com/yuque/0/2023/png/453637/1690874128452-06212089-f417-4986-a8a1-b3787aa80e36.png" alt="image.png"></li>
+</ol>
+<p><strong>总结：</strong>这样就完成客户端与服务端之间的通信。下一步我们再做一个在线聊天室的案例。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 风铃の小窝
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;风铃
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+                </div>
+            </transition>
+            
+            <transition name="fade">
+                <div id="preview" ref="preview" v-show="previewShow">
+                    <img id="preview-content" ref="previewContent" />
+                </div>
+            </transition>
+            
+        </div>
+        <script src="/js/main.js"></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>
