@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>设计模式专题-单例模式 | 风铃の小窝</title>
+        <meta name="author" content="风铃" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <link rel="icon" href="/images/favicon.png" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="layout">
+            <transition name="fade">
+                <div id="loading" v-show="loading">
+                    <div id="loading-circle">
+                        <h2>LOADING</h2>
+                        <p>加载过慢请开启缓存 浏览器默认开启</p>
+                        <img src="/images/loading.gif" />
+                    </div>
+                </div>
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div id="desktop-menu">
+        <a class="title" href="/">
+            <span>风铃の小窝</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;风铃の小窝</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </div>
+</nav>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+            <transition name="into">
+                <div id="main" v-show="!loading">
+                    <div class="article">
+    <div>
+        <h1>设计模式专题-单例模式</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/8/10
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="color: #ffa2c4">设计模式</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>单例模式（Singleton）是一种常用的设计模式。在Java应用中，单例对象能保证在一个JVM中，该对象只有一个实例存在。这样的模式有几个好处：</p>
+<p>1、某些类创建比较频繁，对于一些大型的对象，这是一笔很大的系统开销。</p>
+<p>2、省去了new操作符，降低了系统内存的使用频率，减轻GC压力。</p>
+<p>单例模式如果使用不当，就容易引起线程安全问题。</p>
+<ul>
+<li>饿汉式不存在线程安全问题，但是它一般不被使用，因为它会浪费内存的空间</li>
+<li>懒汉式会合理使用内存空间，只有第一次被加载的时候，才会真正去创建对象。但是这种方式存在线程安全问题。</li>
+</ul>
+<p>懒汉式单例模式的实现方式有三种：</p>
+<ul>
+<li><p>双重检查锁方式（DCL）</p>
+</li>
+<li><p>静态内部类方式 </p>
+</li>
+<li><p>枚举方式</p>
+</li>
+</ul>
+<p>单例模式的应用场景：</p>
+<ul>
+<li>多线程的线程池的设计一般是采用单例模式。</li>
+<li>Web应用的配置文件的读取。</li>
+<li>数据库连接池的设计。</li>
+<li>在Spring中创建的Bean实例默认都是单例模式存在的。</li>
+<li>在Spring MVC框架中，每个控制器对象也是单例。</li>
+</ul>
+<h1 id="单例模式的两种常见方式"><a href="#单例模式的两种常见方式" class="headerlink" title="单例模式的两种常见方式"></a>单例模式的两种常见方式</h1><h2 id="1-饿汉式单例"><a href="#1-饿汉式单例" class="headerlink" title="1. 饿汉式单例"></a>1. 饿汉式单例</h2><pre><code class="java">public class Student1 &#123;
+// 1：构造私有
+  private Student1() &#123;
+  &#125;
+
+  // 2：成员变量初始化本身对象
+  private static Student1 student = new Student1();
+
+
+  // 3：对外提供公共方法获取对象
+  public static Student1 getSingletonInstance() &#123;
+    return student;
+  &#125;
+&#125;
+</code></pre>
+<h2 id="2-懒汉式单例"><a href="#2-懒汉式单例" class="headerlink" title="2. 懒汉式单例"></a>2. 懒汉式单例</h2><pre><code class="java">public class Student5 &#123;
+  private static Student5 student = null ; 
+  // 1：构造私有
+  private Student5() &#123;
+  &#125;
+  public static Student5 getSingletonInstance() &#123;
+    if(student == null )&#123;
+      student = new Student5();
+    &#125;  
+    return student;
+  &#125;
+&#125;
+
+
+
+public class Student5 &#123;
+  private Student5() &#123;
+  &#125;
+  /*
+   * 此处使用一个内部类来维护单例 JVM在类加载的时候，是互斥的，所以可以由此保证线程安全问题
+   */
+  private static class SingletonFactory &#123;
+    private static Student5 student = new Student5();
+  &#125;
+  /* 获取实例 */
+  public static Student5 getSingletonInstance() &#123;
+    return SingletonFactory.student;
+  &#125;
+&#125;
+</code></pre>
+<h2 id="两种常见实现方式优劣对比分析"><a href="#两种常见实现方式优劣对比分析" class="headerlink" title="两种常见实现方式优劣对比分析"></a>两种常见实现方式优劣对比分析</h2><h3 id="1-时间和空间复杂度方面"><a href="#1-时间和空间复杂度方面" class="headerlink" title="1. 时间和空间复杂度方面"></a>1. 时间和空间复杂度方面</h3><ul>
+<li><p>饿汉式是空间换时间，每当类加载时就会创建出来，会存在一定的空间浪费。</p>
+</li>
+<li><p>懒汉式是时间换空间，每次获取实例都需要判断是否需要创建。</p>
+</li>
+</ul>
+<h3 id="2-线程安全方面"><a href="#2-线程安全方面" class="headerlink" title="2. 线程安全方面"></a>2. 线程安全方面</h3><ul>
+<li>饿汉式不存在线程安全问题，但是它一般不被使用，因为它会浪费内存的空间</li>
+<li>懒汉式会合理使用内存空间，只有第一次被加载的时候，才会真正去创建对象。但是这种方式存在线程安全问题。因此，就有了三种解决线程安全问题的方式如下。</li>
+</ul>
+<h1 id="基于上述实现方式的优化实现"><a href="#基于上述实现方式的优化实现" class="headerlink" title="基于上述实现方式的优化实现"></a>基于上述实现方式的优化实现</h1><h2 id="1-双重检查锁（DCL）"><a href="#1-双重检查锁（DCL）" class="headerlink" title="1. 双重检查锁（DCL）"></a>1. 双重检查锁（DCL）</h2><pre><code class="java">public class DoubleCheckLockSingleton &#123;
+    private static volatile DoubleCheckLockSingleton instance;
+
+    private DoubleCheckLockSingleton() &#123;
+        if(instance != null)&#123;
+           // gun
+        &#125;
+    &#125;
+
+    public static DoubleCheckLockSingleton getInstance() &#123;
+        if (instance == null) &#123;
+            synchronized (DoubleCheckLockSingleton.class) &#123;
+                if (instance == null) &#123;
+                    instance = new DoubleCheckLockSingleton();
+                &#125;
+            &#125;
+        &#125;
+        return instance;
+    &#125;
+
+    public void tellEveryone() &#123;
+        System.out.println(&quot;This is a DoubleCheckLockSingleton &quot; + this.hashCode());
+    &#125;
+    private Object readResolve() &#123;
+    &#125;
+&#125;leCheckLockSingleton &quot; + this.hashCode());
+    &#125;
+&#125;
+</code></pre>
+<h2 id="2-静态内部类"><a href="#2-静态内部类" class="headerlink" title="2. 静态内部类"></a>2. 静态内部类</h2><pre><code class="java">public class StaticInnerHolderSingleton &#123;
+    // 静态内部类
+    private static class SingletonHolder &#123;
+        private static final StaticInnerHolderSingleton INSTANCE = 
+                            new StaticInnerHolderSingleton();
+    &#125;
+
+    private StaticInnerHolderSingleton() &#123;&#125;
+
+    public static StaticInnerHolderSingleton getInstance() &#123;
+        return SingletonHolder.INSTANCE;
+    &#125;
+
+    public void tellEveryone() &#123;
+        System.out.println(&quot;This is a StaticInnerHolderSingleton&quot; + this.hashCode());
+    &#125;
+&#125;
+</code></pre>
+<h2 id="3-枚举（最佳实现方式）"><a href="#3-枚举（最佳实现方式）" class="headerlink" title="3. 枚举（最佳实现方式）"></a>3. 枚举（最佳实现方式）</h2><pre><code class="java">public enum EnumSingleton &#123;
+    INSTANCE;
+
+    public void tellEveryone() &#123;
+        System.out.println(&quot;This is an EnumSingleton &quot; + this.hashCode());
+    &#125;
+&#125;
+</code></pre>
+<p>在Java圣经《Effective Java》中，Joshua Bloch大佬如是说：</p>
+<blockquote>
+<p><strong>A single-element enum type is often the best way to implement a singleton.</strong></p>
+</blockquote>
+<p>为什么说枚举是（一般情况下）最好的Java单例实现呢？他也做出了简单的说明：</p>
+<blockquote>
+<p>It is more concise, provides the serialization machinery for free, and provides an ironclad guarantee against multiple instantiation, even in the face of sophisticated serialization or reflection attacks.</p>
+</blockquote>
+<p>大意就是，枚举单例可以有效防御两种破坏单例（即让单例产生多个实例）的行为：反射攻击与序列化攻击。言外之意就是前两种单例方式都会被破坏。那么我们就拿平时最常用的双重检查锁方式开刀来试试看。</p>
+<h1 id="单例破坏与防范"><a href="#单例破坏与防范" class="headerlink" title="单例破坏与防范"></a>单例破坏与防范</h1><h2 id="反射攻击"><a href="#反射攻击" class="headerlink" title="反射攻击"></a>反射攻击</h2><p>直接上代码：</p>
+<pre><code class="java">public class SingletonAttack &#123;
+    public static void main(String[] args) throws Exception &#123;
+        reflectionAttack();
+    &#125;
+
+    public static void reflectionAttack() throws Exception &#123;
+        //通过反射，获取单例类的私有构造器
+        Constructor constructor = DoubleCheckLockSingleton.class.getDeclaredConstructor();
+        //设置私有成员的暴力破解
+        constructor.setAccessible(true);
+        // 通过反射去创建单例类的多个不同的实例
+        DoubleCheckLockSingleton s1 = (DoubleCheckLockSingleton)constructor.newInstance();
+        // 通过反射去创建单例类的多个不同的实例
+        DoubleCheckLockSingleton s2 = (DoubleCheckLockSingleton)constructor.newInstance();
+        s1.tellEveryone();
+        s2.tellEveryone();
+        System.out.println(s1 == s2);
+    &#125;
+&#125;
+</code></pre>
+<p>执行结果如下：</p>
+<pre><code class="text">This is a DoubleCheckLockSingleton 1368884364
+This is a DoubleCheckLockSingleton 401625763
+false
+</code></pre>
+<p>这种方法非常简单暴力，通过反射侵入单例类的私有构造方法并强制执行，使之产生多个不同的实例，这样单例就被破坏了。</p>
+<h2 id="序列化攻击"><a href="#序列化攻击" class="headerlink" title="序列化攻击"></a>序列化攻击</h2><p>这种攻击方式只对实现了[Serializable](&#x2F;&#x2F; 通过反射去创建单例类的多个不同的实例)接口的单例有效，但偏偏有些单例就是必须序列化的。现在假设DoubleCheckLockSingleton类已经实现了该接口，上代码：</p>
+<pre><code class="java">public class SingletonAttack &#123;
+    public static void main(String[] args) throws Exception &#123;
+        serializationAttack();
+    &#125;
+
+    public static void serializationAttack() throws Exception &#123;
+        // 对象序列化流去对对象进行操作
+        ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(&quot;serFile&quot;));
+        //通过单例代码获取一个对象
+        DoubleCheckLockSingleton s1 = DoubleCheckLockSingleton.getInstance();
+        //将单例对象，通过序列化流，序列化到文件中
+        outputStream.writeObject(s1);
+
+     // 通过序列化流，将文件中序列化的对象信息读取到内存中
+        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File(&quot;serFile&quot;)));
+        //通过序列化流，去创建对象
+        DoubleCheckLockSingleton s2 = (DoubleCheckLockSingleton)inputStream.readObject();
+        s1.tellEveryone();
+        s2.tellEveryone();
+
+        System.out.println(s1 == s2);
+    &#125;
+&#125;
+</code></pre>
+<p>执行结果如下：</p>
+<pre><code class="text">This is a DoubleCheckLockSingleton 777874839
+This is a DoubleCheckLockSingleton 254413710
+false
+</code></pre>
+<p>为什么会发生这种事？长话短说，在<code>ObjectInputStream.readObject()</code>方法执行时，其内部方法<code>readOrdinaryObject</code>()中有这样一句话：</p>
+<pre><code class="java">//其中desc是类描述符
+obj = desc.isInstantiable() ? desc.newInstance() : null;
+</code></pre>
+<p>也就是说，如果一个实现了Serializable&#x2F;Externalizable接口的类可以在运行时实例化，那么就调用newInstance()方法，使用其默认构造方法反射创建新的对象实例，自然也就破坏了单例性。要防御序列化攻击，就得将instance声明为transient，并且在单例中加入以下语句：</p>
+<pre><code class="java">private Object readResolve() &#123;
+    return instance;
+&#125;
+</code></pre>
+<p>这是因为在上述readOrdinaryObject()方法中，会通过卫语句<code>desc.hasReadResolveMethod()</code>检查类中是否存在名为readResolve()的方法，如果有，就执行<code>desc.invokeReadResolve(obj)</code>调用该方法。readResolve()会用自定义的反序列化逻辑覆盖默认实现，因此强制它返回instance本身，就可以防止产生新的实例。</p>
+<h2 id="对反射的防御"><a href="#对反射的防御" class="headerlink" title="对反射的防御"></a>对反射的防御</h2><p>我们直接将上述reflectionAttack()方法中的双重检查锁方式的类名改成EnumSingleton并执行，会发现报如下异常：</p>
+<pre><code class="text">Exception in thread &quot;main&quot; java.lang.NoSuchMethodException: me.lmagics.singleton.EnumSingleton.&lt;init&gt;()
+    at java.lang.Class.getConstructor0(Class.java:3082)
+    at java.lang.Class.getDeclaredConstructor(Class.java:2178)
+    at me.lmagics.singleton.SingletonAttack.reflectionAttack(SingletonAttack.java:35)
+    at me.lmagics.singleton.SingletonAttack.main(SingletonAttack.java:19)
+</code></pre>
+<p>这是因为所有Java枚举都隐式继承自Enum抽象类，而Enum抽象类根本没有无参构造方法，只有如下一个构造方法：</p>
+<pre><code class="java">    protected Enum(String name, int ordinal) &#123;
+        this.name = name;
+        this.ordinal = ordinal;
+    &#125;
+</code></pre>
+<p>那么我们就改成获取这个有参构造方法，即：<br><code>Constructor constructor = EnumSingleton.class.getDeclaredConstructor(String.class, int.class);</code><br>结果还是会抛出异常：</p>
+<pre><code class="text">Exception in thread &quot;main&quot; java.lang.IllegalArgumentException: Cannot reflectively create enum objects
+    at java.lang.reflect.Constructor.newInstance(Constructor.java:417)
+    at me.lmagics.singleton.SingletonAttack.reflectionAttack(SingletonAttack.java:38)
+    at me.lmagics.singleton.SingletonAttack.main(SingletonAttack.java:19)
+</code></pre>
+<p>来到Constructor.newInstance()方法中，有如下语句：</p>
+<pre><code class="java">    if ((clazz.getModifiers() &amp; Modifier.ENUM) != 0)
+        throw new IllegalArgumentException(&quot;Cannot reflectively create enum objects&quot;);
+</code></pre>
+<p>可见，JDK反射机制内部完全禁止了用反射创建枚举实例的可能性。</p>
+<h2 id="对序列化的防御"><a href="#对序列化的防御" class="headerlink" title="对序列化的防御"></a>对序列化的防御</h2><p>如果将serializationAttack()方法中的攻击目标换成EnumSingleton，那么我们就会发现s1和s2实际上是同一个实例，最终会打印出true。这是因为ObjectInputStream类中，对枚举类型有一个专门的readEnum()方法来处理，其简要流程如下：</p>
+<ul>
+<li>通过类描述符取得枚举单例的类型EnumSingleton；</li>
+<li>取得枚举单例中的枚举值的名字（这里是INSTANCE）；</li>
+<li>调用Enum.valueOf()方法，根据枚举类型和枚举值的名字，获得最终的单例。</li>
+</ul>
+<p>这种处理方法与readResolve()方法大同小异，都是以绕过反射直接获取单例为目标。不同的是，枚举对序列化的防御仍然是JDK内部实现的。</p>
+<p>综上所述，枚举单例确实是目前最好的单例实现了，不仅写法非常简单，并且JDK能够保证其安全性，不需要我们做额外的工作。</p>
+<blockquote>
+<p>反射攻击和反序列化问题是两种最常见的破坏单例模式的手段，前者利用反射机制修改构造函数的可见性然后强行创建一个新的实例，后者是将原先的对象序列化后再反序列化从而生成一个新的实例</p>
+</blockquote>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 风铃の小窝
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;风铃
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+                </div>
+            </transition>
+            
+            <transition name="fade">
+                <div id="preview" ref="preview" v-show="previewShow">
+                    <img id="preview-content" ref="previewContent" />
+                </div>
+            </transition>
+            
+        </div>
+        <script src="/js/main.js"></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>
