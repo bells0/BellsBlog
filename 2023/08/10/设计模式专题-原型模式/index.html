@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>设计模式专题-原型模式 | 风铃の小窝</title>
+        <meta name="author" content="风铃" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <link rel="icon" href="/images/favicon.png" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="layout">
+            <transition name="fade">
+                <div id="loading" v-show="loading">
+                    <div id="loading-circle">
+                        <h2>LOADING</h2>
+                        <p>加载过慢请开启缓存 浏览器默认开启</p>
+                        <img src="/images/loading.gif" />
+                    </div>
+                </div>
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div id="desktop-menu">
+        <a class="title" href="/">
+            <span>风铃の小窝</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;风铃の小窝</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </div>
+</nav>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+            <transition name="into">
+                <div id="main" v-show="!loading">
+                    <div class="article">
+    <div>
+        <h1>设计模式专题-原型模式</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/8/10
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="color: #00a596">设计模式</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>原型模式虽然是创建型的模式，但是与工厂模式没有关系，从名字即可看出，该模式的思想就是将一个对象作为原型，对其进行复制、克隆，产生一个和原对象类似的新对象。省掉了堆内存一些复杂的处理流程。</p>
+<p>对象复制分为两种情况：深拷贝和浅拷贝</p>
+<ul>
+<li><p><code>浅拷贝</code>：将一个对象复制后，<strong>基本数据类型</strong>的变量都会<strong>重新创建</strong>，而<strong>引用类型</strong>，指向的<strong>还是原对象所指向的</strong>。</p>
+<p>  就是将对象中的简单类型属性和String类型属性进行复制。引用类型的属性复制的只是引用而不是对应的对象。</p>
+</li>
+<li><p><code>深拷贝</code>：将一个对象复制后，不论是基本数据类型还有引用类型，都是重新创建的。<strong>简单来说，就是深复制进行了完全彻底的复制，而浅复制不彻底</strong>。</p>
+<p>  将对象中的所有信息，都完全复制一份，包括引用类型的对象，也是拷贝为一个新对象，引用地址是不同的。</p>
+</li>
+</ul>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><ul>
+<li>先创建一个原型类：</li>
+</ul>
+<pre><code class="java">public class Prototype implements Cloneable &#123;  
+
+    public Object clone() throws CloneNotSupportedException &#123;  
+        Prototype proto = (Prototype) super.clone();  
+        return proto;  
+    &#125;  
+&#125; 
+</code></pre>
+<blockquote>
+<p>很简单，一个原型类，只需要实现Cloneable接口，覆写clone方法，此处clone方法可以改成任意的名称，因为Cloneable接口是个空接口，你可以任意定义实现类的方法名，如cloneA或者cloneB，因为此处的重点是super.clone()这句话，super.clone()调用的是Object的clone()方法，而在Object类中，clone()是native的，具体怎么实现，此处不再深究。<br>在这儿，我将结合对象的浅复制和深复制来说一下，首先需要了解对象深、浅复制的概念：</p>
+</blockquote>
+<ul>
+<li><strong>浅复制</strong>：将一个对象复制后，<strong>基本数据类型</strong>的变量都会<strong>重新创建</strong>，而<strong>引用类型</strong>，指向的<strong>还是原对象所指向的</strong>。</li>
+<li><strong>深复制</strong>：将一个对象复制后，不论是基本数据类型还有引用类型，都是重新创建的。<strong>简单来说，就是深复制进行了完全彻底的复制，而浅复制不彻底</strong>。</li>
+<li>写一个深浅复制的例子</li>
+</ul>
+<pre><code class="java">public class Prototype implements Cloneable, Serializable &#123;  
+
+    private static final long serialVersionUID = 1L;  
+    private String string;  
+
+    private SerializableObject obj;  
+
+    /* 浅复制 */  
+    public Object clone() throws CloneNotSupportedException &#123;  
+        Prototype proto = (Prototype) super.clone();  
+        return proto;  
+    &#125;  
+
+    /* 深复制 */  
+    public Object deepClone() throws IOException, ClassNotFoundException &#123;  
+
+        /* 写入当前对象的二进制流 */  
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();  
+        ObjectOutputStream oos = new ObjectOutputStream(bos);  
+        oos.writeObject(this);  
+
+        /* 读出二进制流产生的新对象 */  
+        ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());  
+        ObjectInputStream ois = new ObjectInputStream(bis);  
+        return ois.readObject();  
+    &#125;  
+
+    public String getString() &#123;  
+        return string;  
+    &#125;  
+
+    public void setString(String string) &#123;  
+        this.string = string;  
+    &#125;  
+
+    public SerializableObject getObj() &#123;  
+        return obj;  
+    &#125;  
+
+    public void setObj(SerializableObject obj) &#123;  
+        this.obj = obj;  
+    &#125;  
+
+&#125;  
+
+class SerializableObject implements Serializable &#123;  
+    private static final long serialVersionUID = 1L;  
+&#125;  
+</code></pre>
+<h1 id="原型模式优点"><a href="#原型模式优点" class="headerlink" title="原型模式优点"></a>原型模式优点</h1><ol>
+<li><p><strong>根据客户端要求实现动态创建对象，客户端不需要知道对象的创建细节，便于代码的维护和扩展。</strong></p>
+</li>
+<li><p><strong>使用原型模式创建对象比直接new一个对象在性能上要好的多，因为Object类的clone方法是一个本地方法，它直接操作内存中的二进制流，特别是复制大对象时，性能的差别非常明显。</strong> </p>
+<p> 所以在需要重复地创建相似对象时可以考虑使用原型模式。比如需要在一个循环体内创建对象，假如对象创建过程比较复杂或者循环次数很多的话，使用原型模式不但可以简化创建过程，而且可以使系统的整体性能提高很多。</p>
+</li>
+</ol>
+<h1 id="原型模式的注意事项"><a href="#原型模式的注意事项" class="headerlink" title="原型模式的注意事项"></a>原型模式的注意事项</h1><ol>
+<li><strong>使用原型模式复制对象不会调用类的构造方法****。</strong> 因为对象的复制是通过调用Object类的clone方法来完成的，它直接在内存中复制数据，因此不 会调用到类的构造方法。不但构造方法中的代码不会执行，甚至连访问权限都对原型模式无效。还记得单例模式吗？单例模式中，只要将构造方法的访问权限设置为 private型，就可以实现单例。但是clone方法直接无视构造方法的权限，所以，单例模式与原型模式是冲突的。</li>
+<li><strong>在使用时要注意深拷贝与浅拷贝的问题****。</strong> clone方法只会拷贝对象中的基本的数据类型，对于数组、容器对象、引用对象等都不会拷贝，这就是浅拷贝。如果要实现深拷贝，必须将原型模式中的数组、容器对象、引用对象等另行拷贝。</li>
+</ol>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 风铃の小窝
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;风铃
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+                </div>
+            </transition>
+            
+            <transition name="fade">
+                <div id="preview" ref="preview" v-show="previewShow">
+                    <img id="preview-content" ref="previewContent" />
+                </div>
+            </transition>
+            
+        </div>
+        <script src="/js/main.js"></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>
