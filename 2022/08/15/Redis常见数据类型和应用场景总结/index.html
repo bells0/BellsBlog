@@ -1,0 +1,507 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Redis常见数据类型和应用场景总结 | 风铃の小窝</title>
+        <meta name="author" content="风铃" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <link rel="icon" href="/images/favicon.png" />
+        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
+<link rel="stylesheet" href="/css/fonts.min.css" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="layout">
+            <transition name="fade">
+                <div id="loading" v-show="loading">
+                    <div id="loading-circle">
+                        <h2>LOADING</h2>
+                        <p>加载过慢请开启缓存 浏览器默认开启</p>
+                        <img src="/images/loading.gif" />
+                    </div>
+                </div>
+            </transition>
+            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <div id="desktop-menu">
+        <a class="title" href="/">
+            <span>风铃の小窝</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;风铃の小窝</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </div>
+</nav>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+            <transition name="into">
+                <div id="main" v-show="!loading">
+                    <div class="article">
+    <div>
+        <h1>Redis常见数据类型和应用场景总结</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2022/8/15
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Redis/" style="color: #00a596">Redis</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>Redis 有五种基础数据结构和4种特殊结构：</p>
+<ul>
+<li><p>基础数据结构: <strong>String（字符串），Hash（哈希），List（列表），Set（集合）、Zset（有序集合）</strong></p>
+</li>
+<li><p>特殊数据结构: <strong>BitMap（2.2 版新增）、HyperLogLog（2.8 版新增）、GEO（3.2 版新增）、Stream（5.0 版新增）</strong></p>
+</li>
+</ul>
+<p>下面分别来总结一下各个数据结构。</p>
+<h1 id="String"><a href="#String" class="headerlink" title="String"></a>String</h1><h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h2><p>String 是 Redis 中最简单同时也是最常用的一个数据结构。String 是一种二进制安全的数据结构，可以用来存储任何类型的数据比如字符串、整数、浮点数、图片（图片的 base64 编码或者解码或者图片的路径）、序列化后的对象。</p>
+<h2 id="2-实现"><a href="#2-实现" class="headerlink" title="2.实现"></a>2.实现</h2><p>Redis是基于C语言编写的，但是String类型底层实现不是C语言中的字符串，而是<strong>SDS</strong>(Simple Dynamic String) 来作为底层实现。</p>
+<p>Redis7的SDS相关部分源码如下（来源：<a target="_blank" rel="noopener" href="https://github.com/redis/redis/blob/7.0/src/sds.h%EF%BC%89%EF%BC%9A">https://github.com/redis/redis/blob/7.0/src/sds.h）：</a></p>
+<pre><code class="c">/* Note: sdshdr5 is never used, we just access the flags byte directly.
+ * However is here to document the layout of type 5 SDS strings. */
+struct __attribute__ ((__packed__)) sdshdr5 &#123;
+    unsigned char flags; /* 3 lsb of type, and 5 msb of string length */
+    char buf[];
+&#125;;
+struct __attribute__ ((__packed__)) sdshdr8 &#123;
+    uint8_t len; /* used */
+    uint8_t alloc; /* excluding the header and null terminator */
+    unsigned char flags; /* 3 lsb of type, 5 unused bits */
+    char buf[];
+&#125;;
+struct __attribute__ ((__packed__)) sdshdr16 &#123;
+    uint16_t len; /* used */
+    uint16_t alloc; /* excluding the header and null terminator */
+    unsigned char flags; /* 3 lsb of type, 5 unused bits */
+    char buf[];
+&#125;;
+struct __attribute__ ((__packed__)) sdshdr32 &#123;
+    uint32_t len; /* used */
+    uint32_t alloc; /* excluding the header and null terminator */
+    unsigned char flags; /* 3 lsb of type, 5 unused bits */
+    char buf[];
+&#125;;
+struct __attribute__ ((__packed__)) sdshdr64 &#123;
+    uint64_t len; /* used */
+    uint64_t alloc; /* excluding the header and null terminator */
+    unsigned char flags; /* 3 lsb of type, 5 unused bits */
+    char buf[];
+&#125;;
+</code></pre>
+<p>除了sdshdr5从未使用外，常用的是其余四种。并且每种都对应相应字节位数。</p>
+<p><strong>提问：为什么要使用SDS？</strong></p>
+<p>答：SDS相比于C语言的字符串，有如下提升：</p>
+<ul>
+<li><strong>可以避免缓冲区溢出</strong>：C 语言中的字符串被修改（比如拼接）时，一旦没有分配足够长度的内存空间，就会造成缓冲区溢出。SDS 被修改时，会先根据 len 属性检查空间大小是否满足要求，如果不满足，则先扩展至所需大小再进行修改操作。</li>
+<li><strong>获取字符串长度的复杂度较低</strong>：C 语言中的字符串的长度通常是经过遍历计数来实现的，时间复杂度为 O(n)。SDS 的长度获取直接读取 len 属性即可，时间复杂度为 O(1)。</li>
+<li><strong>减少内存分配次数</strong>：为了避免修改（增加&#x2F;减少）字符串时，每次都需要重新分配内存（C 语言的字符串是这样的），SDS 实现了空间预分配和惰性空间释放两种优化策略。当 SDS 需要增加字符串时，Redis 会为 SDS 分配好内存，并且根据特定的算法分配多余的内存，这样可以减少连续执行字符串增长操作所需的内存重分配次数。当 SDS 需要减少字符串时，这部分内存不会立即被回收，会被记录下来，等待后续使用（支持手动释放，有对应的 API）。</li>
+<li><strong>二进制安全</strong>：C 语言中的字符串以空字符 <code>\0</code> 作为字符串结束的标识，这存在一些问题，像一些二进制文件（比如图片、视频、音频）就可能包括空字符，C 字符串无法正确保存。SDS 使用 len 属性判断字符串是否结束，不存在这个问题。</li>
+</ul>
+<h2 id="3-常用操作"><a href="#3-常用操作" class="headerlink" title="3.常用操作"></a>3.常用操作</h2><p>普通字符串的基本操作：</p>
+<pre><code class="shell"># 设置 key-value 类型的值
+&gt; SET name lin
+OK
+# 根据 key 获得对应的 value
+&gt; GET name
+&quot;lin&quot;
+# 判断某个 key 是否存在
+&gt; EXISTS name
+(integer) 1
+# 返回 key 所储存的字符串值的长度
+&gt; STRLEN name
+(integer) 3
+# 删除某个 key 对应的值
+&gt; DEL name
+(integer) 1
+</code></pre>
+<p>批量设置 :</p>
+<pre><code class="shell"># 批量设置 key-value 类型的值
+&gt; MSET key1 value1 key2 value2 
+OK
+# 批量获取多个 key 对应的 value
+&gt; MGET key1 key2 
+1) &quot;value1&quot;
+2) &quot;value2&quot;
+</code></pre>
+<h2 id="4-使用场景"><a href="#4-使用场景" class="headerlink" title="4.使用场景"></a>4.使用场景</h2><ol>
+<li><h4 id="缓存对象"><a href="#缓存对象" class="headerlink" title="缓存对象"></a>缓存对象</h4></li>
+<li><h4 id="常规计数"><a href="#常规计数" class="headerlink" title="常规计数"></a>常规计数</h4></li>
+<li><h4 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h4></li>
+<li><h4 id="共享-Session-信息"><a href="#共享-Session-信息" class="headerlink" title="共享 Session 信息"></a>共享 Session 信息</h4></li>
+</ol>
+<h1 id="List"><a href="#List" class="headerlink" title="List"></a>List</h1><h2 id="1-介绍-1"><a href="#1-介绍-1" class="headerlink" title="1.介绍"></a>1.介绍</h2><p>List 列表是简单的字符串列表，<strong>按照插入顺序排序</strong>，可以从头部或尾部向 List 列表添加元素。</p>
+<h2 id="2-实现-1"><a href="#2-实现-1" class="headerlink" title="2.实现"></a>2.实现</h2><p>List 类型的底层数据结构是由<strong>双向链表或压缩列表</strong>实现的：</p>
+<ul>
+<li>如果列表的元素个数小于 <code>512</code> 个（默认值，可由 <code>list-max-ziplist-entries</code> 配置），列表每个元素的值都小于 <code>64</code> 字节（默认值，可由 <code>list-max-ziplist-value</code> 配置），Redis 会使用<strong>压缩列表</strong>作为 List 类型的底层数据结构；</li>
+<li>如果列表的元素不满足上面的条件，Redis 会使用<strong>双向链表</strong>作为 List 类型的底层数据结构；</li>
+</ul>
+<p>但是<strong>在 Redis 3.2 版本之后，List 数据类型底层数据结构就只由 quicklist 实现了，替代了双向链表和压缩列表</strong>。</p>
+<h2 id="3-常用操作-1"><a href="#3-常用操作-1" class="headerlink" title="3.常用操作"></a>3.常用操作</h2><pre><code class="shell"># 将一个或多个值value插入到key列表的表头(最左边)，最后的值在最前面
+LPUSH key value [value ...] 
+# 将一个或多个值value插入到key列表的表尾(最右边)
+RPUSH key value [value ...]
+# 移除并返回key列表的头元素
+LPOP key     
+# 移除并返回key列表的尾元素
+RPOP key 
+
+# 返回列表key中指定区间内的元素，区间以偏移量start和stop指定，从0开始
+LRANGE key start stop
+
+# 从key列表表头弹出一个元素，没有就阻塞timeout秒，如果timeout=0则一直阻塞
+BLPOP key [key ...] timeout
+# 从key列表表尾弹出一个元素，没有就阻塞timeout秒，如果timeout=0则一直阻塞
+BRPOP key [key ...] timeout
+</code></pre>
+<h2 id="4-使用场景-1"><a href="#4-使用场景-1" class="headerlink" title="4.使用场景"></a>4.使用场景</h2><ol>
+<li><h4 id="消息队列-但是一般不会使用redis，而是使用专门的消息队列工具"><a href="#消息队列-但是一般不会使用redis，而是使用专门的消息队列工具" class="headerlink" title="消息队列(但是一般不会使用redis，而是使用专门的消息队列工具)"></a>消息队列(但是一般不会使用redis，而是使用专门的消息队列工具)</h4></li>
+</ol>
+<h1 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h1><h2 id="1-介绍-2"><a href="#1-介绍-2" class="headerlink" title="1.介绍"></a>1.介绍</h2><p>Hash 是一个键值对（key - value）集合，其中 value 的形式如： <code>value=[&#123;field1，value1&#125;，...&#123;fieldN，valueN&#125;]</code>。Hash 特别适合用于存储对象。</p>
+<h2 id="2-实现-2"><a href="#2-实现-2" class="headerlink" title="2.实现"></a>2.实现</h2><p>Hash 类型的底层数据结构是由<strong>压缩列表或哈希表</strong>实现的：</p>
+<ul>
+<li>如果哈希类型元素个数小于 <code>512</code> 个（默认值，可由 <code>hash-max-ziplist-entries</code> 配置），所有值小于 <code>64</code> 字节（默认值，可由 <code>hash-max-ziplist-value</code> 配置）的话，Redis 会使用<strong>压缩列表</strong>作为 Hash 类型的底层数据结构；</li>
+<li>如果哈希类型元素不满足上面条件，Redis 会使用<strong>哈希表</strong>作为 Hash 类型的 底层数据结构。</li>
+</ul>
+<p><strong>在 Redis 7.0 中，压缩列表数据结构已经废弃了，交由 listpack 数据结构来实现了</strong>。</p>
+<h2 id="3-常用操作-2"><a href="#3-常用操作-2" class="headerlink" title="3.常用操作"></a>3.常用操作</h2><pre><code class="shell"># 存储一个哈希表key的键值
+HSET key field value   
+# 获取哈希表key对应的field键值
+HGET key field
+
+# 在一个哈希表key中存储多个键值对
+HMSET key field value [field value...] 
+# 批量获取哈希表key中多个field键值
+HMGET key field [field ...]       
+# 删除哈希表key中的field键值
+HDEL key field [field ...]    
+
+# 返回哈希表key中field的数量
+HLEN key       
+# 返回哈希表key中所有的键值
+HGETALL key 
+
+# 为哈希表key中field键的值加上增量n
+HINCRBY key field n         
+</code></pre>
+<h2 id="4-使用场景-2"><a href="#4-使用场景-2" class="headerlink" title="4.使用场景"></a>4.使用场景</h2><ol>
+<li><h4 id="缓存对象-1"><a href="#缓存对象-1" class="headerlink" title="缓存对象"></a>缓存对象</h4></li>
+<li><h4 id="购物车"><a href="#购物车" class="headerlink" title="购物车"></a>购物车</h4></li>
+</ol>
+<h1 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h1><h2 id="1-介绍-3"><a href="#1-介绍-3" class="headerlink" title="1.介绍"></a>1.介绍</h2><p>Set 类型是一个无序并唯一的键值集合，它的存储顺序不会按照插入的先后顺序进行存储。</p>
+<h2 id="2-实现-3"><a href="#2-实现-3" class="headerlink" title="2.实现"></a>2.实现</h2><p>Set 类型的底层数据结构是由<strong>哈希表或整数集合</strong>实现的：</p>
+<ul>
+<li>如果集合中的元素都是整数且元素个数小于 <code>512</code> （默认值，<code>set-maxintset-entries</code>配置）个，Redis 会使用<strong>整数集合</strong>作为 Set 类型的底层数据结构；</li>
+<li>如果集合中的元素不满足上面条件，则 Redis 使用<strong>哈希表</strong>作为 Set 类型的底层数据结构。</li>
+</ul>
+<h2 id="3-常用操作-3"><a href="#3-常用操作-3" class="headerlink" title="3.常用操作"></a>3.常用操作</h2><pre><code class="shell"># 往集合key中存入元素，元素存在则忽略，若key不存在则新建
+SADD key member [member ...]
+# 从集合key中删除元素
+SREM key member [member ...] 
+# 获取集合key中所有元素
+SMEMBERS key
+# 获取集合key中的元素个数
+SCARD key
+
+# 判断member元素是否存在于集合key中
+SISMEMBER key member
+
+# 从集合key中随机选出count个元素，元素不从key中删除
+SRANDMEMBER key [count]
+# 从集合key中随机选出count个元素，元素从key中删除
+SPOP key [count]
+</code></pre>
+<h2 id="4-使用场景-3"><a href="#4-使用场景-3" class="headerlink" title="4.使用场景"></a>4.使用场景</h2><p>集合的主要几个特性，无序、不可重复、支持并交差等操作。</p>
+<p>因此 Set 类型比较适合用来数据去重和保障数据的唯一性，还可以用来统计多个集合的交集、错集和并集等，当我们存储的数据是无序并且需要去重的情况下，比较适合使用集合类型进行存储。</p>
+<ol>
+<li><h4 id="点赞"><a href="#点赞" class="headerlink" title="点赞"></a>点赞</h4></li>
+<li><h4 id="共同关注"><a href="#共同关注" class="headerlink" title="共同关注"></a>共同关注</h4></li>
+</ol>
+<h1 id="Zset"><a href="#Zset" class="headerlink" title="Zset"></a>Zset</h1><h2 id="1-介绍-4"><a href="#1-介绍-4" class="headerlink" title="1.介绍"></a>1.介绍</h2><p>Zset 类型（有序集合类型）相比于 Set 类型多了一个排序属性 score（分值），对于有序集合 ZSet 来说，每个存储元素相当于有两个值组成的，一个是有序集合的元素值，一个是排序值。</p>
+<p>有序集合保留了集合不能有重复成员的特性（分值可以重复），但不同的是，有序集合中的元素可以排序。</p>
+<h2 id="2-实现-4"><a href="#2-实现-4" class="headerlink" title="2.实现"></a>2.实现</h2><p>Zset 类型的底层数据结构是由<strong>压缩列表或跳表</strong>实现的：</p>
+<ul>
+<li>如果有序集合的元素个数小于 <code>128</code> 个，并且每个元素的值小于 <code>64</code> 字节时，Redis 会使用<strong>压缩列表</strong>作为 Zset 类型的底层数据结构；</li>
+<li>如果有序集合的元素不满足上面的条件，Redis 会使用<strong>跳表</strong>作为 Zset 类型的底层数据结构；</li>
+</ul>
+<p><strong>在 Redis 7.0 中，压缩列表数据结构已经废弃了，交由 listpack 数据结构来实现了。</strong></p>
+<h2 id="3-常用操作-4"><a href="#3-常用操作-4" class="headerlink" title="3.常用操作"></a>3.常用操作</h2><pre><code class="shell"># 往有序集合key中加入带分值元素
+ZADD key score member [[score member]...]   
+# 往有序集合key中删除元素
+ZREM key member [member...]                 
+# 返回有序集合key中元素member的分值
+ZSCORE key member
+# 返回有序集合key中元素个数
+ZCARD key 
+
+# 为有序集合key中元素member的分值加上increment
+ZINCRBY key increment member 
+
+# 正序获取有序集合key从start下标到stop下标的元素
+ZRANGE key start stop [WITHSCORES]
+# 倒序获取有序集合key从start下标到stop下标的元素
+ZREVRANGE key start stop [WITHSCORES]
+
+# 返回有序集合中指定分数区间内的成员，分数由低到高排序。
+ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]
+
+# 返回指定成员区间内的成员，按字典正序排列, 分数必须相同。
+ZRANGEBYLEX key min max [LIMIT offset count]
+# 返回指定成员区间内的成员，按字典倒序排列, 分数必须相同
+ZREVRANGEBYLEX key max min [LIMIT offset count]
+</code></pre>
+<h2 id="4-使用场景-4"><a href="#4-使用场景-4" class="headerlink" title="4.使用场景"></a>4.使用场景</h2><p>Zset 类型（Sorted Set，有序集合） 可以根据元素的权重来排序，我们可以自己来决定每个元素的权重值。比如说，我们可以根据元素插入 Sorted Set 的时间确定权重值，先插入的元素权重小，后插入的元素权重大。</p>
+<ol>
+<li><h4 id="排行榜"><a href="#排行榜" class="headerlink" title="排行榜"></a>排行榜</h4></li>
+<li><h4 id="电话、姓名排序"><a href="#电话、姓名排序" class="headerlink" title="电话、姓名排序"></a>电话、姓名排序</h4></li>
+</ol>
+<h1 id="BitMap"><a href="#BitMap" class="headerlink" title="BitMap"></a>BitMap</h1><h2 id="1-介绍-5"><a href="#1-介绍-5" class="headerlink" title="1.介绍"></a>1.介绍</h2><p>Bitmap，即位图，是一串连续的二进制数组（0和1），可以通过偏移量（offset）定位元素。BitMap通过最小的单位bit来进行<code>0|1</code>的设置，表示某个元素的值或者状态，时间复杂度为O(1)。</p>
+<p>由于 bit 是计算机中最小的单位，使用它进行储存将非常节省空间，特别适合一些数据量大且使用<strong>二值统计的场景</strong>。</p>
+<h2 id="2-实现-5"><a href="#2-实现-5" class="headerlink" title="2.实现"></a>2.实现</h2><p>Bitmap 本身是用 String 类型作为底层数据结构实现的一种统计二值状态的数据类型。</p>
+<p>String 类型是会保存为二进制的字节数组，所以，Redis 就把字节数组的每个 bit 位利用起来，用来表示一个元素的二值状态，你可以把 Bitmap 看作是一个 bit 数组。</p>
+<h2 id="3-常用操作-5"><a href="#3-常用操作-5" class="headerlink" title="3.常用操作"></a>3.常用操作</h2><pre><code class="shell"># 设置值，其中value只能是 0 和 1
+SETBIT key offset value
+
+# 获取值
+GETBIT key offset
+
+# 获取指定范围内值为 1 的个数
+# start 和 end 以字节为单位
+BITCOUNT key start end
+</code></pre>
+<h2 id="4-使用场景-5"><a href="#4-使用场景-5" class="headerlink" title="4.使用场景"></a>4.使用场景</h2><p>Bitmap 类型非常适合二值状态统计的场景，这里的二值状态就是指集合元素的取值就只有 0 和 1 两种，在记录海量数据时，Bitmap 能够有效地节省内存空间。</p>
+<ol>
+<li><h4 id="签到统计"><a href="#签到统计" class="headerlink" title="签到统计"></a>签到统计</h4></li>
+<li><h4 id="判断用户登陆态"><a href="#判断用户登陆态" class="headerlink" title="判断用户登陆态"></a>判断用户登陆态</h4></li>
+<li><h4 id="连续签到用户总数"><a href="#连续签到用户总数" class="headerlink" title="连续签到用户总数"></a>连续签到用户总数</h4></li>
+</ol>
+<h1 id="HyperLogLog"><a href="#HyperLogLog" class="headerlink" title="HyperLogLog"></a>HyperLogLog</h1><h2 id="1-介绍-6"><a href="#1-介绍-6" class="headerlink" title="1.介绍"></a>1.介绍</h2><p>Redis HyperLogLog 是 Redis 2.8.9 版本新增的数据类型，是一种用于「统计基数」的数据集合类型，基数统计就是指统计一个集合中不重复的元素个数。但要注意，HyperLogLog 是统计规则是基于概率完成的，不是非常准确，标准误算率是 0.81%。</p>
+<p>所以，简单来说 HyperLogLog <strong>提供不精确的去重计数</strong>。</p>
+<p>HyperLogLog 的优点是，在输入元素的数量或者体积非常非常大时，计算基数所需的内存空间总是固定的、并且是很小的。</p>
+<p>在 Redis 里面，<strong>每个 HyperLogLog 键只需要花费 12 KB 内存，就可以计算接近 <code>2^64</code> 个不同元素的基数</strong>，和元素越多就越耗费内存的 Set 和 Hash 类型相比，HyperLogLog 就非常节省空间。</p>
+<h2 id="2-实现-6"><a href="#2-实现-6" class="headerlink" title="2.实现"></a>2.实现</h2><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/HyperLogLog">https://en.wikipedia.org/wiki/HyperLogLog</a></p>
+<h2 id="3-常用操作-6"><a href="#3-常用操作-6" class="headerlink" title="3.常用操作"></a>3.常用操作</h2><pre><code class="shell"># 添加指定元素到 HyperLogLog 中
+PFADD key element [element ...]
+
+# 返回给定 HyperLogLog 的基数估算值。
+PFCOUNT key [key ...]
+
+# 将多个 HyperLogLog 合并为一个 HyperLogLog
+PFMERGE destkey sourcekey [sourcekey ...]
+</code></pre>
+<h2 id="4-使用场景-6"><a href="#4-使用场景-6" class="headerlink" title="4.使用场景"></a>4.使用场景</h2><ol>
+<li><h4 id="百万级网页-UV-计数"><a href="#百万级网页-UV-计数" class="headerlink" title="百万级网页 UV 计数"></a>百万级网页 UV 计数</h4></li>
+</ol>
+<h1 id="GEO"><a href="#GEO" class="headerlink" title="GEO"></a>GEO</h1><h2 id="1-介绍-7"><a href="#1-介绍-7" class="headerlink" title="1.介绍"></a>1.介绍</h2><p>Redis GEO 是 Redis 3.2 版本新增的数据类型，主要用于存储地理位置信息，并对存储的信息进行操作。</p>
+<p>在日常生活中，我们越来越依赖搜索“附近的餐馆”、在打车软件上叫车，这些都离不开基于位置信息服务（Location-Based Service，LBS）的应用。LBS 应用访问的数据是和人或物关联的一组经纬度信息，而且要能查询相邻的经纬度范围，GEO 就非常适合应用在 LBS 服务的场景中。</p>
+<h2 id="2-实现-7"><a href="#2-实现-7" class="headerlink" title="2.实现"></a>2.实现</h2><p>GEO 本身并没有设计新的底层数据结构，而是直接使用了 Sorted Set 集合类型。</p>
+<p>GEO 类型使用 GeoHash 编码方法实现了经纬度到 Sorted Set 中元素权重分数的转换，这其中的两个关键机制就是「对二维地图做区间划分」和「对区间进行编码」。一组经纬度落在某个区间后，就用区间的编码值来表示，并把编码值作为 Sorted Set 元素的权重分数。</p>
+<p>这样一来，我们就可以把经纬度保存到 Sorted Set 中，利用 Sorted Set 提供的“按权重进行有序范围查找”的特性，实现 LBS 服务中频繁使用的“搜索附近”的需求。</p>
+<h2 id="3-常用操作-7"><a href="#3-常用操作-7" class="headerlink" title="3.常用操作"></a>3.常用操作</h2><pre><code class="shell"># 存储指定的地理空间位置，可以将一个或多个经度(longitude)、纬度(latitude)、位置名称(member)添加到指定的 key 中。
+GEOADD key longitude latitude member [longitude latitude member ...]
+
+# 从给定的 key 里返回所有指定名称(member)的位置（经度和纬度），不存在的返回 nil。
+GEOPOS key member [member ...]
+
+# 返回两个给定位置之间的距离。
+GEODIST key member1 member2 [m|km|ft|mi]
+
+# 根据用户给定的经纬度坐标来获取指定范围内的地理位置集合。
+GEORADIUS key longitude latitude radius m|km|ft|mi [WITHCOORD] [WITHDIST] [WITHHASH] [COUNT count] [ASC|DESC] [STORE key] [STOREDIST key]
+</code></pre>
+<h2 id="4-使用场景-7"><a href="#4-使用场景-7" class="headerlink" title="4.使用场景"></a>4.使用场景</h2><ol>
+<li>周边服务，定位搜索等</li>
+</ol>
+<h1 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h1><h2 id="1-介绍-8"><a href="#1-介绍-8" class="headerlink" title="1.介绍"></a>1.介绍</h2><p>Redis Stream 是 Redis 5.0 版本新增加的数据类型，Redis 专门为消息队列设计的数据类型。</p>
+<p>在 Redis 5.0 Stream 没出来之前，消息队列的实现方式都有着各自的缺陷，例如：</p>
+<ul>
+<li>发布订阅模式，不能持久化也就无法可靠的保存消息，并且对于离线重连的客户端不能读取历史消息的缺陷；</li>
+<li>List 实现消息队列的方式不能重复消费，一个消息消费完就会被删除，而且生产者需要自行实现全局唯一 ID。</li>
+</ul>
+<p>基于以上问题，Redis 5.0 便推出了 Stream 类型也是此版本最重要的功能，用于完美地实现消息队列，它支持消息的持久化、支持自动生成全局唯一 ID、支持 ack 确认消息的模式、支持消费组模式等，让消息队列更加的稳定和可靠。</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>暂时用的还不多，就不过多介绍了。</p>
+<h1 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h1><ul>
+<li><p>《Redis 设计与实现》</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.redis.com.cn/commands.html">https://www.redis.com.cn/commands.html</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://javaguide.cn/database/redis/redis-questions-01.html">https://javaguide.cn/database/redis/redis-questions-01.html</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.xiaolincoding.com/redis/data_struct/command.html">https://www.xiaolincoding.com/redis/data_struct/command.html</a></p>
+</li>
+</ul>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 风铃の小窝
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;风铃
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+                </div>
+            </transition>
+            
+            <transition name="fade">
+                <div id="preview" ref="preview" v-show="previewShow">
+                    <img id="preview-content" ref="previewContent" />
+                </div>
+            </transition>
+            
+        </div>
+        <script src="/js/main.js"></script>
+        
+        
+
+
+
+
+        
+    </body>
+</html>
