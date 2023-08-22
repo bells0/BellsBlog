@@ -158,10 +158,60 @@
         </span>
         
         
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="color: #ff7d73">消息队列</a>
+            </span>
+            
+        </span>
+        
     </div>
     
     <div class="content" v-pre>
-        
+        <h2 id="RocketMQ服务启动"><a href="#RocketMQ服务启动" class="headerlink" title="RocketMQ服务启动"></a>RocketMQ服务启动</h2><ol>
+<li><p>NameServer 启动在&#x2F;bin 目录下，双击<strong>mqnamesrv.cmd</strong> 启动  </p>
+<p><img src="/2023/08/14/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RocketMQ%E5%AE%9E%E8%B7%B5/image03.jpg"></p>
+</li>
+<li><p>broker 启动</p>
+</li>
+</ol>
+<p>        默认双击<strong>mqbroker.cmd</strong> 启动会在其他端口上，这里使用 命令方式，将broker启动在9876端口：</p>
+<pre><code class="shell">mqbroker -n localhost:9876
+</code></pre>
+<p><img src="/2023/08/14/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RocketMQ%E5%AE%9E%E8%B7%B5/image02.png"></p>
+<h2 id="普通收发消息实战"><a href="#普通收发消息实战" class="headerlink" title="普通收发消息实战"></a>普通收发消息实战</h2><h3 id="第一套input，output"><a href="#第一套input，output" class="headerlink" title="第一套input，output"></a>第一套input，output</h3><h3 id="定制第二套input-output"><a href="#定制第二套input-output" class="headerlink" title="定制第二套input,output"></a>定制第二套input,output</h3><p>需要自定义source和sink。</p>
+<p><img src="/2023/08/14/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RocketMQ%E5%AE%9E%E8%B7%B5/image01.png"></p>
+<h2 id="Dashboard-控制台"><a href="#Dashboard-控制台" class="headerlink" title="Dashboard 控制台"></a>Dashboard 控制台</h2><p>控制台这里为了跟踪源码，暂时使用源码启动的方式运行：</p>
+<p>官方下载源码：<a target="_blank" rel="noopener" href="https://github.com/apache/rocketmq-dashboard">GitHub - apache&#x2F;rocketmq-dashboard: The state-of-the-art Dashboard of Apache RoccketMQ provides excellent monitoring capability. Various graphs and statistics of events, performance and system information of clients and application is evidently made available to the user.</a></p>
+<p>然后导入本地IDEA中。</p>
+<p>修改配置文件</p>
+<p><img src="/2023/08/14/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RocketMQ%E5%AE%9E%E8%B7%B5/04.jpg"></p>
+<p>然后在启动类中启动：</p>
+<p><img src="/2023/08/14/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RocketMQ%E5%AE%9E%E8%B7%B5/05.jpg"></p>
+<h2 id="跟踪消息收发轨迹"><a href="#跟踪消息收发轨迹" class="headerlink" title="跟踪消息收发轨迹"></a>跟踪消息收发轨迹</h2><p>引入轨迹的目的</p>
+<ul>
+<li>轨迹是实实在在存在的话，那么就可以避免一些相互“扯皮”的情况</li>
+<li>证实生产者是否发送了消息，也可以证实消费者是否消费了消息</li>
+<li>通过轨迹，轨迹就需要有轨迹应该体现的信息：<ul>
+<li>从哪里来</li>
+<li>什么时间来</li>
+<li>停留在哪里</li>
+<li>停留的时间</li>
+<li>去向哪里</li>
+<li>去向的时间是多少</li>
+<li>整条消息消耗的时间是多少</li>
+</ul>
+</li>
+</ul>
+<h3 id="如何使用轨迹"><a href="#如何使用轨迹" class="headerlink" title="如何使用轨迹"></a>如何使用轨迹</h3><ol>
+<li>先启动MQ</li>
+</ol>
+
     </div>
     
     
