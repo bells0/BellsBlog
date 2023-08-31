@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>消息队列RocketMQ实践 | 风铃の小窝</title>
+        <title>设计模式专题-原型模式 | 风铃の小窝</title>
         <meta name="author" content="风铃" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
@@ -147,14 +147,14 @@
                 <div id="main" v-show="!loading">
                     <div class="article">
     <div>
-        <h1>消息队列RocketMQ实践</h1>
+        <h1>设计模式专题-原型模式</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/8/14
+            2023/4/10
         </span>
         
         
@@ -165,7 +165,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="color: #ff7d73">消息队列</a>
+                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="color: #00a596">设计模式</a>
             </span>
             
         </span>
@@ -173,43 +173,94 @@
     </div>
     
     <div class="content" v-pre>
-        <h2 id="RocketMQ服务启动"><a href="#RocketMQ服务启动" class="headerlink" title="RocketMQ服务启动"></a>RocketMQ服务启动</h2><ol>
-<li><p>NameServer 启动在&#x2F;bin 目录下，双击<strong>mqnamesrv.cmd</strong> 启动  </p>
-<p><img src="/2023/08/14/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RocketMQ%E5%AE%9E%E8%B7%B5/image03.jpg"></p>
+        <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>原型模式虽然是创建型的模式，但是与工厂模式没有关系，从名字即可看出，该模式的思想就是将一个对象作为原型，对其进行复制、克隆，产生一个和原对象类似的新对象。省掉了堆内存一些复杂的处理流程。</p>
+<p>对象复制分为两种情况：深拷贝和浅拷贝</p>
+<ul>
+<li><p><code>浅拷贝</code>：将一个对象复制后，<strong>基本数据类型</strong>的变量都会<strong>重新创建</strong>，而<strong>引用类型</strong>，指向的<strong>还是原对象所指向的</strong>。</p>
+<p>  就是将对象中的简单类型属性和String类型属性进行复制。引用类型的属性复制的只是引用而不是对应的对象。</p>
 </li>
-<li><p>broker 启动</p>
+<li><p><code>深拷贝</code>：将一个对象复制后，不论是基本数据类型还有引用类型，都是重新创建的。<strong>简单来说，就是深复制进行了完全彻底的复制，而浅复制不彻底</strong>。</p>
+<p>  将对象中的所有信息，都完全复制一份，包括引用类型的对象，也是拷贝为一个新对象，引用地址是不同的。</p>
+</li>
+</ul>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><ul>
+<li>先创建一个原型类：</li>
+</ul>
+<pre><code class="java">public class Prototype implements Cloneable &#123;  
+
+    public Object clone() throws CloneNotSupportedException &#123;  
+        Prototype proto = (Prototype) super.clone();  
+        return proto;  
+    &#125;  
+&#125; 
+</code></pre>
+<blockquote>
+<p>很简单，一个原型类，只需要实现Cloneable接口，覆写clone方法，此处clone方法可以改成任意的名称，因为Cloneable接口是个空接口，你可以任意定义实现类的方法名，如cloneA或者cloneB，因为此处的重点是super.clone()这句话，super.clone()调用的是Object的clone()方法，而在Object类中，clone()是native的，具体怎么实现，此处不再深究。<br>在这儿，我将结合对象的浅复制和深复制来说一下，首先需要了解对象深、浅复制的概念：</p>
+</blockquote>
+<ul>
+<li><strong>浅复制</strong>：将一个对象复制后，<strong>基本数据类型</strong>的变量都会<strong>重新创建</strong>，而<strong>引用类型</strong>，指向的<strong>还是原对象所指向的</strong>。</li>
+<li><strong>深复制</strong>：将一个对象复制后，不论是基本数据类型还有引用类型，都是重新创建的。<strong>简单来说，就是深复制进行了完全彻底的复制，而浅复制不彻底</strong>。</li>
+<li>写一个深浅复制的例子</li>
+</ul>
+<pre><code class="java">public class Prototype implements Cloneable, Serializable &#123;  
+
+    private static final long serialVersionUID = 1L;  
+    private String string;  
+
+    private SerializableObject obj;  
+
+    /* 浅复制 */  
+    public Object clone() throws CloneNotSupportedException &#123;  
+        Prototype proto = (Prototype) super.clone();  
+        return proto;  
+    &#125;  
+
+    /* 深复制 */  
+    public Object deepClone() throws IOException, ClassNotFoundException &#123;  
+
+        /* 写入当前对象的二进制流 */  
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();  
+        ObjectOutputStream oos = new ObjectOutputStream(bos);  
+        oos.writeObject(this);  
+
+        /* 读出二进制流产生的新对象 */  
+        ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());  
+        ObjectInputStream ois = new ObjectInputStream(bis);  
+        return ois.readObject();  
+    &#125;  
+
+    public String getString() &#123;  
+        return string;  
+    &#125;  
+
+    public void setString(String string) &#123;  
+        this.string = string;  
+    &#125;  
+
+    public SerializableObject getObj() &#123;  
+        return obj;  
+    &#125;  
+
+    public void setObj(SerializableObject obj) &#123;  
+        this.obj = obj;  
+    &#125;  
+
+&#125;  
+
+class SerializableObject implements Serializable &#123;  
+    private static final long serialVersionUID = 1L;  
+&#125;  
+</code></pre>
+<h1 id="原型模式优点"><a href="#原型模式优点" class="headerlink" title="原型模式优点"></a>原型模式优点</h1><ol>
+<li><p><strong>根据客户端要求实现动态创建对象，客户端不需要知道对象的创建细节，便于代码的维护和扩展。</strong></p>
+</li>
+<li><p><strong>使用原型模式创建对象比直接new一个对象在性能上要好的多，因为Object类的clone方法是一个本地方法，它直接操作内存中的二进制流，特别是复制大对象时，性能的差别非常明显。</strong> </p>
+<p> 所以在需要重复地创建相似对象时可以考虑使用原型模式。比如需要在一个循环体内创建对象，假如对象创建过程比较复杂或者循环次数很多的话，使用原型模式不但可以简化创建过程，而且可以使系统的整体性能提高很多。</p>
 </li>
 </ol>
-<p>        默认双击<strong>mqbroker.cmd</strong> 启动会在其他端口上，这里使用 命令方式，将broker启动在9876端口：</p>
-<pre><code class="shell">mqbroker -n localhost:9876
-</code></pre>
-<p><img src="/2023/08/14/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RocketMQ%E5%AE%9E%E8%B7%B5/image02.png"></p>
-<h2 id="普通收发消息实战"><a href="#普通收发消息实战" class="headerlink" title="普通收发消息实战"></a>普通收发消息实战</h2><h3 id="第一套input，output"><a href="#第一套input，output" class="headerlink" title="第一套input，output"></a>第一套input，output</h3><h3 id="定制第二套input-output"><a href="#定制第二套input-output" class="headerlink" title="定制第二套input,output"></a>定制第二套input,output</h3><p>需要自定义source和sink。</p>
-<p><img src="/2023/08/14/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RocketMQ%E5%AE%9E%E8%B7%B5/image01.png"></p>
-<h2 id="Dashboard-控制台"><a href="#Dashboard-控制台" class="headerlink" title="Dashboard 控制台"></a>Dashboard 控制台</h2><p>控制台这里为了跟踪源码，暂时使用源码启动的方式运行：</p>
-<p>官方下载源码：<a target="_blank" rel="noopener" href="https://github.com/apache/rocketmq-dashboard">GitHub - apache&#x2F;rocketmq-dashboard: The state-of-the-art Dashboard of Apache RoccketMQ provides excellent monitoring capability. Various graphs and statistics of events, performance and system information of clients and application is evidently made available to the user.</a></p>
-<p>然后导入本地IDEA中。</p>
-<p>修改配置文件</p>
-<p><img src="/2023/08/14/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RocketMQ%E5%AE%9E%E8%B7%B5/04.jpg"></p>
-<p>然后在启动类中启动：</p>
-<p><img src="/2023/08/14/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97RocketMQ%E5%AE%9E%E8%B7%B5/05.jpg"></p>
-<h2 id="跟踪消息收发轨迹"><a href="#跟踪消息收发轨迹" class="headerlink" title="跟踪消息收发轨迹"></a>跟踪消息收发轨迹</h2><p>引入轨迹的目的</p>
-<ul>
-<li>轨迹是实实在在存在的话，那么就可以避免一些相互“扯皮”的情况</li>
-<li>证实生产者是否发送了消息，也可以证实消费者是否消费了消息</li>
-<li>通过轨迹，轨迹就需要有轨迹应该体现的信息：<ul>
-<li>从哪里来</li>
-<li>什么时间来</li>
-<li>停留在哪里</li>
-<li>停留的时间</li>
-<li>去向哪里</li>
-<li>去向的时间是多少</li>
-<li>整条消息消耗的时间是多少</li>
-</ul>
-</li>
-</ul>
-<h3 id="如何使用轨迹"><a href="#如何使用轨迹" class="headerlink" title="如何使用轨迹"></a>如何使用轨迹</h3><ol>
-<li>先启动MQ</li>
+<h1 id="原型模式的注意事项"><a href="#原型模式的注意事项" class="headerlink" title="原型模式的注意事项"></a>原型模式的注意事项</h1><ol>
+<li><strong>使用原型模式复制对象不会调用类的构造方法****。</strong> 因为对象的复制是通过调用Object类的clone方法来完成的，它直接在内存中复制数据，因此不 会调用到类的构造方法。不但构造方法中的代码不会执行，甚至连访问权限都对原型模式无效。还记得单例模式吗？单例模式中，只要将构造方法的访问权限设置为 private型，就可以实现单例。但是clone方法直接无视构造方法的权限，所以，单例模式与原型模式是冲突的。</li>
+<li><strong>在使用时要注意深拷贝与浅拷贝的问题****。</strong> clone方法只会拷贝对象中的基本的数据类型，对于数组、容器对象、引用对象等都不会拷贝，这就是浅拷贝。如果要实现深拷贝，必须将原型模式中的数组、容器对象、引用对象等另行拷贝。</li>
 </ol>
 
     </div>
