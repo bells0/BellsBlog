@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Tags: 设计模式 | 风铃の小窝</title>
+        <title>风铃の小窝</title>
         <meta name="author" content="风铃" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
@@ -31,6 +31,8 @@
 
 
 
+
+<script src="/js/lib/home.js"></script>
 
 <link rel="stylesheet" href="/css/main.css" />
 
@@ -141,174 +143,190 @@
 
             <transition name="into">
                 <div id="main" v-show="!loading">
-                    <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/tags/Java8%E6%96%B0%E7%89%B9%E6%80%A7/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                Java8新特性
-            </a>
+                    <div id="home-head">
+    <div id="home-background" ref="homeBackground" data-images="/images/12.jpg,/images/55.jpg"></div>
+    <div id="home-info" @click="homeClick">
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="info">
+            <div class="wrap">
+                <h1>风铃の小窝</h1>
+                <h3></h3>
+                <h5></h5>
+            </div>
         </span>
+    </div>
+</div>
+<div id="home-posts-wrap"  ref="homePostsWrap">
+    <div id="home-posts">
         
+
+<div class="post">
+    <a href="/2022/08/22/%E5%9C%A8Linux%E4%B8%8A%E6%90%AD%E5%BB%BAJenkins%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E5%B9%B3%E5%8F%B0%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/">
+        <h2 class="post-title">在Linux上搭建Jenkins持续集成平台实现自动化部署</h2>
+    </a>
+    <div class="category-and-date">
         
-        
-        <span>
-            <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                网络编程
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/RPC/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                RPC
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                设计模式
-            </a>
-        </span>
-        
-        
-        
-        
-        
-        <span>
-            <a href="/tags/Redis/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                Redis
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                消息队列
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/Jenkins/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                Jenkins
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/Linux/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                Linux
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/%E5%89%8D%E7%AB%AF/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                前端
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/%E5%B9%82%E7%AD%89%E6%80%A7/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                幂等性
-            </a>
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2022/8/22
         </span>
         
         
     </div>
-    
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2023/4/10</div>
-            <a href="/2023/04/10/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%93%E9%A2%98-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
-                <h3>设计模式专题-原型模式</h3>
-            </a>
-            <div class="info">
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="color: #00a596">设计模式</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>从零开始在Linux服务器上搭建Jenkins环境</p>
+
+            
         </div>
     </div>
-    
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2023/4/10</div>
-            <a href="/2023/04/10/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%93%E9%A2%98-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
-                <h3>设计模式专题-单例模式</h3>
-            </a>
-            <div class="info">
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="color: #03a9f4">设计模式</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Jenkins/" style="color: #00bcd4">Jenkins</a>
+        </span>
+        
+        <span class="tag">
+            
+            <a href="/tags/Linux/" style="color: #03a9f4">Linux</a>
+        </span>
+        
+    </div>
+    <a href="/2022/08/22/%E5%9C%A8Linux%E4%B8%8A%E6%90%AD%E5%BB%BAJenkins%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E5%B9%B3%E5%8F%B0%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2022/08/15/Redis%E5%B8%B8%E8%A7%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E6%80%BB%E7%BB%93/">
+        <h2 class="post-title">Redis常见数据类型和应用场景总结</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2022/8/15
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>总结一下redis的常用数据类型以及使用场景</p>
+
+            
         </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Redis/" style="color: #00bcd4">Redis</a>
+        </span>
+        
+    </div>
+    <a href="/2022/08/15/Redis%E5%B8%B8%E8%A7%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E6%80%BB%E7%BB%93/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2022/02/13/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/">
+        <h2 class="post-title">博客搭建完成</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2022/2/13
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>自建博客完成</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2022/02/13/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/" class="go-post">阅读全文</a>
+</div>
+
+
+        <div class="page-current">
+    <div class="prev">
+        
+        <a class="page-num" href="/">
+            <i class="fa-solid fa-caret-left fa-fw"></i>
+        </a>
+        
+    </div>
+    <div class="page-index">
+        
+        <span>
+            
+            
+            <a class="page-num" href="/">1</a>
+        </span>
+        
+        <span class="current">2</span>
+        
+    </div>
+    <div class="next">
+        
+    </div>
+</div>
+
+    </div>
+    
+    <div id="home-card">
+        <div id="card-div">
+    <div class="card-style">
+        <div class="avatar">
+            <img src="/images/avatar.jpg" alt="avatar" />
+        </div>
+        <div class="name">风铃</div>
+        <div class="description">
+            <p>Description<br>个人博客中心</p>
+
+        </div>
+        
+        
+        <div class="friend-links">
+            
+            <div class="friend-link">
+                <a href="https://bells0.github.io/">wonderbell</a>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
     </div>
     
 </div>

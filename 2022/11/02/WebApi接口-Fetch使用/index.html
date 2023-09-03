@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Tags: 设计模式 | 风铃の小窝</title>
+        <title>WebApi接口-Fetch使用 | 风铃の小窝</title>
         <meta name="author" content="风铃" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
@@ -27,6 +27,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -141,175 +145,104 @@
 
             <transition name="into">
                 <div id="main" v-show="!loading">
-                    <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/tags/Java8%E6%96%B0%E7%89%B9%E6%80%A7/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                Java8新特性
-            </a>
+                    <div class="article">
+    <div>
+        <h1>WebApi接口-Fetch使用</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2022/11/2
         </span>
         
         
-        
-        <span>
-            <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                网络编程
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%89%8D%E7%AB%AF/" style="color: #ff7d73">前端</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/tags/RPC/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                RPC
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                设计模式
-            </a>
-        </span>
-        
-        
-        
-        
-        
-        <span>
-            <a href="/tags/Redis/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                Redis
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                消息队列
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/Jenkins/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                Jenkins
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/Linux/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                Linux
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/%E5%89%8D%E7%AB%AF/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                前端
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/%E5%B9%82%E7%AD%89%E6%80%A7/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                幂等性
-            </a>
-        </span>
-        
         
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2023/4/10</div>
-            <a href="/2023/04/10/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%93%E9%A2%98-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
-                <h3>设计模式专题-原型模式</h3>
-            </a>
-            <div class="info">
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="color: #00a596">设计模式</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
+    <div class="content" v-pre>
+        <p><strong>WebApi接口：Fetch使用与详解</strong></p>
+<p>随着前端技术的快速发展，传统的<code>XMLHttpRequest</code>逐渐被更现代、简洁的<code>Fetch API</code>替代。Fetch为Web应用程序提供了一个简单一致的API，用于获取网络资源。在本篇文章中，我们将详细探讨Fetch的使用方法及其背后的机制。</p>
+<h3 id="1-基本使用"><a href="#1-基本使用" class="headerlink" title="1. 基本使用"></a>1. 基本使用</h3><p>Fetch的基本语法非常简洁，例如：</p>
+<pre><code class="javascript">fetch(&#39;https://api.example.com/data&#39;)
+  .then(response =&gt; response.json())
+  .then(data =&gt; console.log(data))
+  .catch(error =&gt; console.error(&#39;Error:&#39;, error));
+</code></pre>
+<p>上述代码中，我们调用<code>fetch</code>函数，并传入一个URL。这将返回一个Promise，该Promise在请求成功时解析为Response对象。随后，我们可以将Response对象转换为JSON，然后处理这些数据。</p>
+<h3 id="2-请求配置"><a href="#2-请求配置" class="headerlink" title="2. 请求配置"></a>2. 请求配置</h3><p>Fetch不仅支持GET请求，还支持其他HTTP方法，如POST、PUT等。可以通过传递一个配置对象来实现：</p>
+<pre><code class="javascript">fetch(&#39;https://api.example.com/data&#39;, &#123;
+  method: &#39;POST&#39;,
+  headers: &#123;
+    &#39;Content-Type&#39;: &#39;application/json&#39;
+  &#125;,
+  body: JSON.stringify(&#123;
+    key: &#39;value&#39;
+  &#125;)
+&#125;);
+</code></pre>
+<h3 id="3-处理响应"><a href="#3-处理响应" class="headerlink" title="3. 处理响应"></a>3. 处理响应</h3><p>Fetch的响应对象（Response）提供了多种方法来解析响应体，如：</p>
+<ul>
+<li><code>response.json()</code>：将响应体解析为JSON对象。</li>
+<li><code>response.text()</code>：将响应体解析为文本。</li>
+<li><code>response.blob()</code>：将响应体解析为BLOB对象，适用于文件。</li>
+<li><code>response.formData()</code>：将响应体解析为FormData对象。</li>
+</ul>
+<h3 id="4-错误处理"><a href="#4-错误处理" class="headerlink" title="4. 错误处理"></a>4. 错误处理</h3><p>虽然Fetch使网络请求变得简单，但错误处理仍然很重要。需要注意的是，只有网络故障或请求被阻止时，Fetch才会真正地拒绝（reject）。</p>
+<p>例如，404状态的响应不会被标记为拒绝。因此，我们需要显式地检查响应是否成功：</p>
+<pre><code class="javascript">fetch(&#39;https://api.example.com/data&#39;)
+  .then(response =&gt; &#123;
+    if (!response.ok) &#123;
+      throw new Error(&#39;Network response was not ok&#39;);
+    &#125;
+    return response.json();
+  &#125;)
+  .then(data =&gt; console.log(data))
+  .catch(error =&gt; console.error(&#39;Error:&#39;, error));
+</code></pre>
+<h3 id="5-使用async-x2F-await"><a href="#5-使用async-x2F-await" class="headerlink" title="5. 使用async&#x2F;await"></a>5. 使用async&#x2F;await</h3><p>Fetch与async&#x2F;await结合使用可以使代码更加简洁：</p>
+<pre><code class="javascript">async function fetchData() &#123;
+  try &#123;
+    const response = await fetch(&#39;https://api.example.com/data&#39;);
+    if (!response.ok) &#123;
+      throw new Error(&#39;Network response was not ok&#39;);
+    &#125;
+    const data = await response.json();
+    console.log(data);
+  &#125; catch (error) &#123;
+    console.error(&#39;Error:&#39;, error);
+  &#125;
+&#125;
+
+fetchData();
+</code></pre>
+<h3 id="6-其他特性"><a href="#6-其他特性" class="headerlink" title="6. 其他特性"></a>6. 其他特性</h3><ul>
+<li><p><strong>AbortController</strong>：Fetch API还提供了一个AbortController构造函数，允许你取消请求。</p>
+</li>
+<li><p><strong>缓存</strong>：Fetch请求可以通过设置<code>cache</code>属性来指定缓存策略，如<code>default</code>、<code>no-store</code>、<code>reload</code>等。</p>
+</li>
+</ul>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>Fetch API提供了一个强大、灵活的工具，用于在Web应用程序中执行网络请求。与传统的<code>XMLHttpRequest</code>相比，它提供了更简洁的语法和更丰富的功能。通过了解和掌握Fetch，前端开发人员可以更轻松地进行WebAPI交互，提高开发效率。</p>
+
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2023/4/10</div>
-            <a href="/2023/04/10/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%93%E9%A2%98-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
-                <h3>设计模式专题-单例模式</h3>
-            </a>
-            <div class="info">
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="color: #03a9f4">设计模式</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
-    </div>
+    
+    
+    
+    
+    
     
 </div>
 
@@ -342,6 +275,12 @@
             
         </div>
         <script src="/js/main.js"></script>
+        
+        
+
+
+
+
         
     </body>
 </html>
