@@ -164,6 +164,76 @@
         
 
 <div class="post">
+    <a href="/2023/02/02/linux%E8%BD%AF%E9%93%BE%E6%8E%A5%E4%B8%8E%E7%A1%AC%E9%93%BE%E6%8E%A5/">
+        <h2 class="post-title">linux软链接与硬链接</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/2/2
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p><strong>Linux软链接与硬链接详解</strong></p>
+<p>在Linux系统中，文件链接允许一个文件在文件系统中有多个名称。Linux提供了两种类型的链接：硬链接和软链接（也称为符号链接）。这两种链接在使用和实现上有本质的区别，深入了解它们有助于更好地管理和使用Linux文件系统。</p>
+<h3 id="1-硬链接"><a href="#1-硬链接" class="headerlink" title="1. 硬链接"></a>1. 硬链接</h3><h4 id="1-1-什么是硬链接？"><a href="#1-1-什么是硬链接？" class="headerlink" title="1.1 什么是硬链接？"></a>1.1 什么是硬链接？</h4><p>硬链接可以被视为文件的一个额外名称。本质上，硬链接都指向同一个inode节点。因此，创建硬链接等同于为一个文件增加一个新的引用。</p>
+<h4 id="1-2-硬链接的特点："><a href="#1-2-硬链接的特点：" class="headerlink" title="1.2 硬链接的特点："></a>1.2 硬链接的特点：</h4><ul>
+<li>硬链接指向的是inode，而不是文件数据。因此，所有硬链接引用的数据是相同的。</li>
+<li>删除一个硬链接只会减少inode的链接计数。只有当链接计数减少到0时，数据块才会被释放。</li>
+<li>硬链接不能跨文件系统。</li>
+<li>硬链接不能链接到目录（除非是超级用户）。</li>
+<li>文件有相同的inode和存储数据。</li>
+</ul>
+<h4 id="1-3-创建和删除硬链接："><a href="#1-3-创建和删除硬链接：" class="headerlink" title="1.3 创建和删除硬链接："></a>1.3 创建和删除硬链接：</h4><p>使用<code>ln</code>命令创建硬链接。</p>
+<pre><code class="bash">ln source_file link_name
+</code></pre>
+<h3 id="2-软链接（符号链接）"><a href="#2-软链接（符号链接）" class="headerlink" title="2. 软链接（符号链接）"></a>2. 软链接（符号链接）</h3><h4 id="2-1-什么是软链接？"><a href="#2-1-什么是软链接？" class="headerlink" title="2.1 什么是软链接？"></a>2.1 什么是软链接？</h4><p>软链接与Windows中的快捷方式类似，它是一个独立的文件，但指向另一个文件的路径，而不是其内容。</p>
+<h4 id="2-2-软链接的特点："><a href="#2-2-软链接的特点：" class="headerlink" title="2.2 软链接的特点："></a>2.2 软链接的特点：</h4><ul>
+<li>软链接包含一个指向其目标的文件路径。</li>
+<li>软链接可以跨文件系统。</li>
+<li>软链接可以链接到目录。</li>
+<li>如果删除了目标文件，软链接将成为“死链接”（也称为“悬挂链接”）。</li>
+<li>软链接有自己的inode和权限。</li>
+</ul>
+<h4 id="2-3-创建和删除软链接："><a href="#2-3-创建和删除软链接：" class="headerlink" title="2.3 创建和删除软链接："></a>2.3 创建和删除软链接：</h4><p>使用<code>ln</code>命令加上<code>-s</code>参数创建软链接。</p>
+<pre><code class="bash">ln -s target_file link_name
+</code></pre>
+<h3 id="3-硬链接与软链接的区别："><a href="#3-硬链接与软链接的区别：" class="headerlink" title="3. 硬链接与软链接的区别："></a>3. 硬链接与软链接的区别：</h3><ul>
+<li><strong>存储</strong>：硬链接与其目标共享相同的inode和文件数据，而软链接有自己的inode和存储，它保存了目标文件的路径。</li>
+<li><strong>跨文件系统</strong>：硬链接不能跨文件系统，而软链接可以。</li>
+<li><strong>链接到目录</strong>：通常情况下，硬链接不能链接到目录，但软链接可以。</li>
+<li><strong>删除原文件</strong>：删除原文件后，硬链接仍然可以访问内容，而软链接则失效。</li>
+<li><strong>磁盘使用</strong>：硬链接不占用额外的磁盘空间（除了文件系统的inode表之外），而软链接文件需要自己的磁盘空间来存储路径信息。</li>
+</ul>
+<h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h3><p>链接是Linux文件系统的重要组成部分。了解硬链接和软链接的区别和使用情境，可以帮助系统管理员和开发者更有效地管理文件和目录，以及编写健壮的脚本和程序。当决定使用哪种链接时，应根据具体的需求和应用场景进行选择。</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Linux/" style="color: #ff7d73">Linux</a>
+        </span>
+        
+    </div>
+    <a href="/2023/02/02/linux%E8%BD%AF%E9%93%BE%E6%8E%A5%E4%B8%8E%E7%A1%AC%E9%93%BE%E6%8E%A5/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2022/11/02/WebApi%E6%8E%A5%E5%8F%A3-Fetch%E4%BD%BF%E7%94%A8/">
         <h2 class="post-title">WebApi接口-Fetch使用</h2>
     </a>
@@ -256,7 +326,7 @@ fetchData();
         
         <span class="tag">
             
-            <a href="/tags/%E5%89%8D%E7%AB%AF/" style="color: #03a9f4">前端</a>
+            <a href="/tags/%E5%89%8D%E7%AB%AF/" style="color: #00a596">前端</a>
         </span>
         
     </div>
@@ -364,7 +434,7 @@ fetchData();
         
         <span class="tag">
             
-            <a href="/tags/%E5%B9%82%E7%AD%89%E6%80%A7/" style="color: #ff7d73">幂等性</a>
+            <a href="/tags/%E5%B9%82%E7%AD%89%E6%80%A7/" style="color: #03a9f4">幂等性</a>
         </span>
         
     </div>
@@ -403,12 +473,12 @@ fetchData();
         
         <span class="tag">
             
-            <a href="/tags/Jenkins/" style="color: #00bcd4">Jenkins</a>
+            <a href="/tags/Linux/" style="color: #03a9f4">Linux</a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Linux/" style="color: #00a596">Linux</a>
+            <a href="/tags/Jenkins/" style="color: #00bcd4">Jenkins</a>
         </span>
         
     </div>
@@ -447,7 +517,7 @@ fetchData();
         
         <span class="tag">
             
-            <a href="/tags/Redis/" style="color: #00bcd4">Redis</a>
+            <a href="/tags/Redis/" style="color: #ff7d73">Redis</a>
         </span>
         
     </div>
@@ -515,7 +585,7 @@ fetchData();
         <div id="card-div">
     <div class="card-style">
         <div class="avatar">
-            <img src="/images/avatar.jpg" alt="avatar" />
+            <img src="/images/avatar2.jpg" alt="avatar" />
         </div>
         <div class="name">风铃</div>
         <div class="description">
